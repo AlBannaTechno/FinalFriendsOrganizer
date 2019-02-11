@@ -4,7 +4,7 @@ using FriendOrganizer.Model;
 
 namespace FriendOrganizer.DataAccess
 {
-    class FriendOrganizerDbContext:DbContext
+    public class FriendOrganizerDbContext:DbContext
     {
         // https://stackoverflow.com/questions/30084916/no-connection-string-named-could-be-found-in-the-application-config-file/37697318
         // using :base(name=FriendOrganizerDb") only allowable if
