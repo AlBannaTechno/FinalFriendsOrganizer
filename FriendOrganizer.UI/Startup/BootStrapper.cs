@@ -24,6 +24,7 @@ namespace FriendOrganizer.UI.Startup
             // whenever we request any interface this class implement it
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
             builder.RegisterType<FriendDataService>().As<IFriendDataService>();
+            builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
             builder.RegisterType<FriendOrganizerDbContext>().AsSelf();
 
             return builder.Build();
