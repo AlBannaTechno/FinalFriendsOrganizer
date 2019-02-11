@@ -24,6 +24,6 @@ namespace FriendOrganizer.UI.ViewModel
                 Friends.Add(friend);
             }
         }
-        public ObservableCollection<LookupItem> Friends { get; set; }
+        public ObservableCollection<LookupItem> Friends { get;}
     }
 }
