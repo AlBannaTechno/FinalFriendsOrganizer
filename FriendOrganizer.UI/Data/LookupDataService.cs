@@ -19,6 +19,8 @@ namespace FriendOrganizer.UI.Data
 
         public async Task<IEnumerable<LookupItem>> GetFriendLookupAsync()
         {
+            // Warn : We can't use string interp.. int Linq query
+            // so we can't do : DisplayMember = $"{f.FirstName} {f.LastName}"
             using (var ctx = _contextCreator())
             {
                 return await ctx.Friends.AsNoTracking()
@@ -26,7 +28,7 @@ namespace FriendOrganizer.UI.Data
                         new LookupItem()
                         {
                             Id = f.Id,
-                            DisplayMember = $"{f.FirstName} {f.LastName}"
+                            DisplayMember = f.FirstName+" "+f.LastName
                         }).ToListAsync();
             }
         }
