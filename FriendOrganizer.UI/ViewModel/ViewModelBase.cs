@@ -4,7 +4,7 @@ using FriendOrganizer.UI.Annotations;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    class ViewModelBase:INotifyPropertyChanged
+    public class ViewModelBase:INotifyPropertyChanged
     {
         #region INotifyPropertyChanged : implementation Generated With Resharper
 
