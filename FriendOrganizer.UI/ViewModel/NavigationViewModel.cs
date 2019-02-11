@@ -5,7 +5,7 @@ using FriendOrganizer.UI.Data;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    class NavigationViewModel : INavigationViewModel
+    public class NavigationViewModel : INavigationViewModel
     {
         private readonly IFriendLookupDataService _friendLookupService;
 
