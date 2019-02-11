@@ -65,6 +65,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Data\IFriendLookupDataService.cs" />
+    <Compile Include="Data\LookupDataService.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Startup\BootStrapper.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />

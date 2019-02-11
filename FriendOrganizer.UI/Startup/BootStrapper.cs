@@ -17,6 +17,12 @@ namespace FriendOrganizer.UI.Startup
             var builder=new ContainerBuilder();
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
+
+            // we use AsImplementedInterfaces() because we will create other []LookupInterfaces
+            // And implement it inside LookupDataService class
+            // so we just say here to autofac to always return LookupDataService instance
+            // whenever we request any interface this class implement it
+            builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
             builder.RegisterType<FriendDataService>().As<IFriendDataService>();
             builder.RegisterType<FriendOrganizerDbContext>().AsSelf();
 
