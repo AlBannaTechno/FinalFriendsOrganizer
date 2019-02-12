@@ -22,21 +22,21 @@
 		<Label Content="Firstname"
 		       Margin="10,10,10,0" />
 		<TextBox Grid.Row="1"
-		         Text="{Binding Friend.FirstName,Mode=TwoWay,UpdateSourceTrigger=Default}"
+		         Text="{Binding Friend.FirstName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 		         Margin="10,10,10,0" />
 
 		<Label Grid.Row="2"
 		       Content="Lastname"
 		       Margin="10,0" />
 		<TextBox Grid.Row="3"
-						 Text="{Binding Friend.LastName,Mode=TwoWay,UpdateSourceTrigger=Default}"
+						 Text="{Binding Friend.LastName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 		         Margin="10,0" />
 
 		<Label Grid.Row="4"
 		       Content="Email"
 		       Margin="10,0" />
 		<TextBox Grid.Row="5"
-						 Text="{Binding Friend.Email,Mode=TwoWay,UpdateSourceTrigger=Default}"
+						 Text="{Binding Friend.Email,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 		         Margin="10,10,10,0" />
 
 		<StackPanel Grid.Row="7" Orientation="Horizontal">
