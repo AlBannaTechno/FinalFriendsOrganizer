@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using FriendOrganizer.Model;
 using FriendOrganizer.UI.Data;
+using FriendOrganizer.UI.Event;
 using Prism.Events;
 
 namespace FriendOrganizer.UI.ViewModel
@@ -38,6 +39,11 @@ namespace FriendOrganizer.UI.ViewModel
             {
                 _selectedFriend = value;
                 OnPropertyChanged();
+                if (_selectedFriend!=null)
+                {
+                    _eventAggregator.GetEvent<OpenFriendDetailViewEvent>()
+                        .Publish(_selectedFriend.Id);
+                }
             }
         }
     }
