@@ -70,6 +70,7 @@
     </ApplicationDefinition>
     <Compile Include="Data\IFriendLookupDataService.cs" />
     <Compile Include="Data\LookupDataService.cs" />
+    <Compile Include="Event\OpenFriendDetailViewEvent.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Startup\BootStrapper.cs" />
     <Compile Include="ViewModel\FriendDetailViewModel.cs" />
