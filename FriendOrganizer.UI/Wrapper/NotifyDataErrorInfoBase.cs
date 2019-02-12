@@ -22,7 +22,7 @@ namespace FriendOrganizer.UI.Wrapper
         public bool HasErrors => _errorsBtPropertyName.Any();
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
         // https://stackoverflow.com/questions/1062102/practical-usage-of-virtual-functions-in-c-sharp
-        protected virtual void OnErrorChanged(string propertyName)
+        protected virtual void OnErrorsChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
             // Next is a Very Smart Tricky
@@ -39,7 +39,7 @@ namespace FriendOrganizer.UI.Wrapper
             if (!_errorsBtPropertyName[propertyName].Contains(error))
             {
                 _errorsBtPropertyName[propertyName].Add(error);
-                OnErrorChanged(propertyName);
+                OnErrorsChanged(propertyName);
             }
         }
 
@@ -48,7 +48,7 @@ namespace FriendOrganizer.UI.Wrapper
             if (_errorsBtPropertyName.ContainsKey(propertyName))
             {
                 _errorsBtPropertyName.Remove(propertyName);
-                OnErrorChanged(propertyName);
+                OnErrorsChanged(propertyName);
             }
         }
     }
