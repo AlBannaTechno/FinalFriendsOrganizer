@@ -6,8 +6,33 @@
              DispatcherUnhandledException="App_OnDispatcherUnhandledException"
              >
     <Application.Resources>
-         <Style TargetType="{x:Type TextBox}">
-					 <Style.Triggers>
+		<Style TargetType="{x:Type TextBox}">
+			<Setter Property="Validation.ErrorTemplate">
+				<Setter.Value>
+					<ControlTemplate>
+						<StackPanel>
+							<AdornedElementPlaceholder x:Name="Placeholder"/>
+							<TextBlock FontSize="12" Foreground="red"
+												 Text="{Binding  ElementName=Placeholder,
+								Path=AdornedElement.(Validation.Errors)[0].ErrorContent
+								}"
+								/>
+
+							<!--<ListBox ItemsSource="{Binding ElementName=Placeholder,
+								Path=AdornedElement.(Validation.Errors)
+								}">
+								<ListBox.ItemTemplate>
+									<DataTemplate>
+										<TextBlock Text="{Binding ErrorContent}"/>
+									</DataTemplate>
+								</ListBox.ItemTemplate>
+							</ListBox>-->
+
+						</StackPanel>
+					</ControlTemplate>
+				</Setter.Value>
+			</Setter>
+			<Style.Triggers>
 						 <Trigger Property="Validation.HasError" Value="True">
 							 <Setter Property="Background" Value="Red"/>
 							 <Setter Property="ToolTip"
