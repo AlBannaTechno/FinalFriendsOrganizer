@@ -22,12 +22,12 @@ namespace FriendOrganizer.UI.Wrapper
         public bool HasErrors => _errorsBtPropertyName.Any();
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
-        private void OnErrorChanged(string propertyName)
+        protected virtual void OnErrorChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
 
-        protected virtual void AddError(string propertyName, string error)
+        protected void AddError(string propertyName, string error)
         {
             if (!_errorsBtPropertyName.ContainsKey(propertyName))
             {
@@ -41,7 +41,7 @@ namespace FriendOrganizer.UI.Wrapper
             }
         }
 
-        protected virtual void ClearError(string propertyName)
+        protected void ClearError(string propertyName)
         {
             if (_errorsBtPropertyName.ContainsKey(propertyName))
             {
