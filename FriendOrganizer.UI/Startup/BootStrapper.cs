@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Autofac;
 using FriendOrganizer.DataAccess;
 using FriendOrganizer.UI.Data;
+using FriendOrganizer.UI.Data.Lookups;
+using FriendOrganizer.UI.Data.Repositories;
 using FriendOrganizer.UI.ViewModel;
 using Prism.Events;
 
@@ -25,7 +27,7 @@ namespace FriendOrganizer.UI.Startup
             // so we just say here to autofac to always return LookupDataService instance
             // whenever we request any interface this class implement it
             builder.RegisterType<LookupDataService>().AsImplementedInterfaces();
-            builder.RegisterType<FriendDataService>().As<IFriendDataService>();
+            builder.RegisterType<FriendRepository>().As<IFriendRepository>();
             builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
             builder.RegisterType<FriendDetailViewModel>().As<IFriendDetailViewModel>();
             builder.RegisterType<FriendOrganizerDbContext>().AsSelf();

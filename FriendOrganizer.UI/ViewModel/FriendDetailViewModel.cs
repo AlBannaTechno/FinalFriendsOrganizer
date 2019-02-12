@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Input;
 using FriendOrganizer.Model;
 using FriendOrganizer.UI.Data;
+using FriendOrganizer.UI.Data.Repositories;
 using FriendOrganizer.UI.Event;
 using FriendOrganizer.UI.Wrapper;
 using Prism.Commands;
@@ -16,13 +17,13 @@ namespace FriendOrganizer.UI.ViewModel
 {
     class FriendDetailViewModel : ViewModelBase, IFriendDetailViewModel
     {
-        private readonly IFriendDataService _dataService;
+        private readonly IFriendRepository _repository;
         private FriendWrapper _friend;
         private readonly IEventAggregator _eventAggregator;
 
-        public FriendDetailViewModel(IFriendDataService dataService,IEventAggregator eventAggregator)
+        public FriendDetailViewModel(IFriendRepository repository,IEventAggregator eventAggregator)
         {
-            _dataService = dataService;
+            _repository = repository;
             _eventAggregator = eventAggregator;
             _eventAggregator.GetEvent<OpenFriendDetailViewEvent>()
                 .Subscribe(OnOpenFriendDetailView);
@@ -32,7 +33,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         private async void OnSaveExecute()
         {
-            await _dataService.SaveAsync(Friend.Model);
+            await _repository.SaveAsync(Friend.Model);
             _eventAggregator.GetEvent<AfterFriendSavedEvent>()
                 .Publish(new AfterFriendSavedEventArgs()
                 {
@@ -54,7 +55,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         public async Task LoadAsync(int friendId)
         {
-            var friend = await _dataService.GetByIdAsync(friendId);
+            var friend = await _repository.GetByIdAsync(friendId);
             Friend=new FriendWrapper(friend);
 
             Friend.PropertyChanged += (s, e) =>

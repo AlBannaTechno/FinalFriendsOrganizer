@@ -1,21 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
 using System.Threading.Tasks;
 using FriendOrganizer.DataAccess;
 using FriendOrganizer.Model;
 
-namespace FriendOrganizer.UI.Data
+namespace FriendOrganizer.UI.Data.Repositories
 {
-    class FriendDataService : IFriendDataService
+    class FriendRepository : IFriendRepository
     {
         /* Important Explanation
          *
          * we can use : Next : 
             private readonly FriendOrganizerDbContext _contextCreator;
              
-             public FriendDataService(FriendOrganizerDbContext contextCreator)
+             public FriendRepository(FriendOrganizerDbContext contextCreator)
                 {
                     _contextCreator = contextCreator;
                 }
@@ -48,10 +46,12 @@ namespace FriendOrganizer.UI.Data
          */
 
         private readonly Func<FriendOrganizerDbContext> _contextCreator;
-        public FriendDataService(Func<FriendOrganizerDbContext> contextCreator)
+
+        public FriendRepository(Func<FriendOrganizerDbContext> contextCreator)
         {
             _contextCreator = contextCreator;
         }
+
         public async Task<Friend> GetByIdAsync(int friendId)
         {
             using (var ctx = _contextCreator())
@@ -62,7 +62,7 @@ namespace FriendOrganizer.UI.Data
 
         public async Task SaveAsync(Friend friend)
         {
-            using (var ctx=_contextCreator())
+            using (var ctx = _contextCreator())
             {
                 ctx.Friends.Attach(friend);
                 ctx.Entry(friend).State = EntityState.Modified;
