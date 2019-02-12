@@ -33,7 +33,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         private async void OnSaveExecute()
         {
-            await _repository.SaveAsync(Friend.Model);
+            await _repository.SaveAsync();
             _eventAggregator.GetEvent<AfterFriendSavedEvent>()
                 .Publish(new AfterFriendSavedEventArgs()
                 {
@@ -63,7 +63,6 @@ namespace FriendOrganizer.UI.ViewModel
                 // we will just Rais CanExecuteChanged When the message comes from HasErrors property
                 if (e.PropertyName == nameof(Friend.HasErrors))
                 {
-                    var v = nameof(Friend.HasErrors);
                     ((DelegateCommand) SaveCommand).RaiseCanExecuteChanged();
                 }
             };

@@ -45,29 +45,21 @@ namespace FriendOrganizer.UI.Data.Repositories
                         
          */
 
-        private readonly Func<FriendOrganizerDbContext> _contextCreator;
+        private readonly FriendOrganizerDbContext _context;
 
-        public FriendRepository(Func<FriendOrganizerDbContext> contextCreator)
+        public FriendRepository(FriendOrganizerDbContext context)
         {
-            _contextCreator = contextCreator;
+            _context = context;
         }
 
         public async Task<Friend> GetByIdAsync(int friendId)
         {
-            using (var ctx = _contextCreator())
-            {
-                return await ctx.Friends.AsNoTracking().SingleAsync(f => f.Id == friendId);
-            }
+                return await _context.Friends.SingleAsync(f => f.Id == friendId);
         }
 
-        public async Task SaveAsync(Friend friend)
+        public async Task SaveAsync()
         {
-            using (var ctx = _contextCreator())
-            {
-                ctx.Friends.Attach(friend);
-                ctx.Entry(friend).State = EntityState.Modified;
-                await ctx.SaveChangesAsync();
-            }
+                await _context.SaveChangesAsync();
         }
     }
 }
