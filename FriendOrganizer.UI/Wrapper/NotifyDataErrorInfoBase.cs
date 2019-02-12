@@ -25,6 +25,8 @@ namespace FriendOrganizer.UI.Wrapper
         protected virtual void OnErrorChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            // Next is a Very Smart Tricky
+            base.OnPropertyChanged(nameof(HasErrors));
         }
 
         protected void AddError(string propertyName, string error)

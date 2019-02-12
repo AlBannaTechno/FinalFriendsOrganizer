@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using FriendOrganizer.Model;
 using FriendOrganizer.UI.Data;
@@ -42,7 +43,8 @@ namespace FriendOrganizer.UI.ViewModel
 
         private bool OnSaveCanExecute()
         {
-            return true;
+            // TODO : check if friend has changes
+            return Friend!=null && !Friend.HasErrors;
         }
 
         private async void OnOpenFriendDetailView(int friendId)
@@ -54,6 +56,18 @@ namespace FriendOrganizer.UI.ViewModel
         {
             var friend = await _dataService.GetByIdAsync(friendId);
             Friend=new FriendWrapper(friend);
+
+            Friend.PropertyChanged += (s, e) =>
+            {
+                // we will just Rais CanExecuteChanged When the message comes from HasErrors property
+                if (e.PropertyName == nameof(Friend.HasErrors))
+                {
+                    var v = nameof(Friend.HasErrors);
+                    ((DelegateCommand) SaveCommand).RaiseCanExecuteChanged();
+                }
+            };
+
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
 
         public FriendWrapper Friend
