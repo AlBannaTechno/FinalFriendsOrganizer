@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using FriendOrganizer.Model;
 using FriendOrganizer.UI.ViewModel;
 
@@ -25,6 +26,7 @@ namespace FriendOrganizer.UI.Wrapper
             {
                 Model.FirstName = value;
                 OnPropertyChanged();
+                ValidateProperty();
             }
         }
 
@@ -45,6 +47,20 @@ namespace FriendOrganizer.UI.Wrapper
             {
                 Model.Email = value;
                 OnPropertyChanged();
+            }
+        }
+
+        private void ValidateProperty([CallerMemberName]string propertyName = null)
+        {
+            ClearError(propertyName);
+            switch (propertyName)
+            {
+                case nameof(FirstName):
+                    if (FirstName.Equals("robot", StringComparison.OrdinalIgnoreCase))
+                    {
+                        AddError(propertyName, "Robots are not valid friend");
+                    }
+                    break;
             }
         }
 
