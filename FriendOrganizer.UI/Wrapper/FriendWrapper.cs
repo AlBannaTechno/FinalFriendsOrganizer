@@ -9,43 +9,41 @@ using FriendOrganizer.UI.ViewModel;
 
 namespace FriendOrganizer.UI.Wrapper
 {
-    public class FriendWrapper:NotifyDataErrorInfoBase
+    public class FriendWrapper:ModelWrapper<Friend>
     {
-        public FriendWrapper(Friend model)
+        public FriendWrapper(Friend model) : base(model)
         {
-            Model = model;
-        }
-        public Friend Model { get; }
 
-        public int Id => Model.Id;
+        }
+
+        public int Id => GetValue<int>();
 
         public string FirstName
         {
-            get => Model.FirstName;
+            get => GetValue<string>();
             set
             {
-                Model.FirstName = value;
-                OnPropertyChanged();
+                SetValue<string>(value);
                 ValidateProperty();
             }
         }
 
         public string LastName
         {
-            get => Model.LastName;
+            get => GetValue<string>();
             set
             {
-                Model.LastName = value;
+                SetValue<string>(value);
                 OnPropertyChanged();
             }
         }
 
         public string Email
         {
-            get => Model.Email;
+            get => GetValue<string>();
             set
             {
-                Model.Email = value;
+                SetValue<string>(value);
                 OnPropertyChanged();
             }
         }

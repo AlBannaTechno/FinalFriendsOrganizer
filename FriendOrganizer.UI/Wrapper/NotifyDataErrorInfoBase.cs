@@ -21,7 +21,7 @@ namespace FriendOrganizer.UI.Wrapper
         }
         public bool HasErrors => _errorsBtPropertyName.Any();
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-
+        // https://stackoverflow.com/questions/1062102/practical-usage-of-virtual-functions-in-c-sharp
         protected virtual void OnErrorChanged(string propertyName)
         {
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
