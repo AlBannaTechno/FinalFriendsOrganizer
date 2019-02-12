@@ -36,7 +36,7 @@
 		       Content="Email"
 		       Margin="10,0" />
 		<TextBox Grid.Row="5"
-						 Text="{Binding Friend.Email,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+						 Text="{Binding Friend.Email,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,TargetNullValue=''}"
 		         Margin="10,10,10,0" />
 
 		<StackPanel Grid.Row="7" Orientation="Horizontal">
