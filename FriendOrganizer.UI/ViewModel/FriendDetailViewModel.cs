@@ -17,13 +17,14 @@ namespace FriendOrganizer.UI.ViewModel
 {
     class FriendDetailViewModel : ViewModelBase, IFriendDetailViewModel
     {
-        private readonly IFriendRepository _repository;
+        private readonly IFriendRepository _friendRepository;
         private FriendWrapper _friend;
         private readonly IEventAggregator _eventAggregator;
+        private bool _hashChanges;
 
-        public FriendDetailViewModel(IFriendRepository repository,IEventAggregator eventAggregator)
+        public FriendDetailViewModel(IFriendRepository friendRrepository,IEventAggregator eventAggregator)
         {
-            _repository = repository;
+            _friendRepository = friendRrepository;
             _eventAggregator = eventAggregator;
          
             SaveCommand=new DelegateCommand(OnSaveExecute,OnSaveCanExecute);
@@ -31,7 +32,8 @@ namespace FriendOrganizer.UI.ViewModel
 
         private async void OnSaveExecute()
         {
-            await _repository.SaveAsync();
+            await _friendRepository.SaveAsync();
+            HasChanges = _friendRepository.HasChanges();
             _eventAggregator.GetEvent<AfterFriendSavedEvent>()
                 .Publish(new AfterFriendSavedEventArgs()
                 {
@@ -42,17 +44,20 @@ namespace FriendOrganizer.UI.ViewModel
 
         private bool OnSaveCanExecute()
         {
-            // TODO : check if friend has changes
-            return Friend!=null && !Friend.HasErrors;
+            return Friend!=null && !Friend.HasErrors && HasChanges;
         }
   
         public async Task LoadAsync(int friendId)
         {
-            var friend = await _repository.GetByIdAsync(friendId);
+            var friend = await _friendRepository.GetByIdAsync(friendId);
             Friend=new FriendWrapper(friend);
 
             Friend.PropertyChanged += (s, e) =>
             {
+                if (!HasChanges)
+                {
+                    HasChanges = _friendRepository.HasChanges();
+                }
                 // we will just Rais CanExecuteChanged When the message comes from HasErrors property
                 if (e.PropertyName == nameof(Friend.HasErrors))
                 {
@@ -74,5 +79,19 @@ namespace FriendOrganizer.UI.ViewModel
         }
 
         public ICommand SaveCommand { get;}
+
+        public bool HasChanges
+        {
+            get => _hashChanges;
+            set
+            {
+                if (HasChanges!=value)
+                {
+                    _hashChanges = value;
+                    OnPropertyChanged();
+                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+                }
+            }
+        }
     }
 }
