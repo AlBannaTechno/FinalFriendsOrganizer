@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Threading.Tasks;
+using System.Windows;
 using FriendOrganizer.UI.Event;
 using Prism.Events;
 
@@ -45,6 +46,12 @@ namespace FriendOrganizer.UI.ViewModel
 
         private async void OnOpenFriendDetailView(int friendId)
         {
+            if (FriendDetailViewModel != null && FriendDetailViewModel.HasChanges)
+            {
+                var result = MessageBox.Show("You Have Made changes ! Go AnyWay ?","Changes Lose Warning",MessageBoxButton.OKCancel);
+                if(result==MessageBoxResult.Cancel)
+                    return;
+            }
             FriendDetailViewModel = FriendDetailViewModelCreator();
             await FriendDetailViewModel.LoadAsync(friendId);
         }
