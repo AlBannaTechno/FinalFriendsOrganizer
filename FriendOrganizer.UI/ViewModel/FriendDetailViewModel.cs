@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.Remoting.Messaging;
 using System.Text;
@@ -8,6 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using FriendOrganizer.Model;
 using FriendOrganizer.UI.Data;
+using FriendOrganizer.UI.Data.Lookups;
 using FriendOrganizer.UI.Data.Repositories;
 using FriendOrganizer.UI.Event;
 using FriendOrganizer.UI.Services;
@@ -24,17 +26,24 @@ namespace FriendOrganizer.UI.ViewModel
         private readonly IEventAggregator _eventAggregator;
         private bool _hashChanges;
         private IMessageDialogService _messageDialogService;
+        private IProgrammingLanguageLookupDataService _programmingLanguageLookupDataService;
 
         public FriendDetailViewModel(IFriendRepository friendRrepository,IEventAggregator eventAggregator
-            ,IMessageDialogService messageDialogService)
+            ,IMessageDialogService messageDialogService,
+            IProgrammingLanguageLookupDataService programmingLanguageLookupDataService)
         {
             _friendRepository = friendRrepository;
             _eventAggregator = eventAggregator;
             _messageDialogService = messageDialogService;
+            _programmingLanguageLookupDataService = programmingLanguageLookupDataService;
 
             SaveCommand =new DelegateCommand(OnSaveExecute,OnSaveCanExecute);
             DeleteCommand=new DelegateCommand(OnDeleteExecute);
+
+            ProgrammingLanguages = new ObservableCollection<LookupItem>();
         }
+
+        public ObservableCollection<LookupItem> ProgrammingLanguages { get;}
 
         private async void OnDeleteExecute()
         {
@@ -66,11 +75,18 @@ namespace FriendOrganizer.UI.ViewModel
   
         public async Task LoadAsync(int? friendId)
         {
-            var friend =friendId.HasValue
+            var friend = friendId.HasValue
                 ? await _friendRepository.GetByIdAsync(friendId.Value)
-                    :CreateNewFriend()
+                    : CreateNewFriend()
                 ;
-            Friend=new FriendWrapper(friend);
+            InitializeFriend(friend);
+
+            await LoadProgrammingLanguagesLookupAsync();
+        }
+
+        private void InitializeFriend(Friend friend)
+        {
+            Friend = new FriendWrapper(friend);
 
             Friend.PropertyChanged += (s, e) =>
             {
@@ -81,15 +97,25 @@ namespace FriendOrganizer.UI.ViewModel
                 // we will just Rais CanExecuteChanged When the message comes from HasErrors property
                 if (e.PropertyName == nameof(Friend.HasErrors))
                 {
-                    ((DelegateCommand) SaveCommand).RaiseCanExecuteChanged();
+                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
                 }
             };
 
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
-            if (Friend.Id==0)
+            if (Friend.Id == 0)
             {
                 // Little trick to trigger the validation when creating new friend
                 Friend.FirstName = "";
+            }
+        }
+
+        private async Task LoadProgrammingLanguagesLookupAsync()
+        {
+            ProgrammingLanguages.Clear();
+            var lookup = await _programmingLanguageLookupDataService.GetProgrammingLanguageLookupAsync();
+            foreach (var lookupItem in lookup)
+            {
+                ProgrammingLanguages.Add(lookupItem);
             }
         }
 
