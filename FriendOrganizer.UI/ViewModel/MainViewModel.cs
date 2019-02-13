@@ -12,7 +12,7 @@ namespace FriendOrganizer.UI.ViewModel
     public class MainViewModel:ViewModelBase
     {
         private IEventAggregator _eventAggregator;
-        private IFriendDetailViewModel _friendDetailViewModel;
+        private IDetailViewModel _detailViewModel;
         private IMessageDialogService _messageDialogService;
         public Func<IFriendDetailViewModel> FriendDetailViewModelCreator { get; set; }
 
@@ -36,7 +36,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void AfterFriendDeleted(int obj)
         {
-            FriendDetailViewModel = null;
+            DetailViewModel = null;
         }
 
         public async Task LoadAsync()
@@ -48,26 +48,26 @@ namespace FriendOrganizer.UI.ViewModel
 
         public INavigationViewModel NavigationViewModel { get; }
 
-        public IFriendDetailViewModel FriendDetailViewModel
+        public IDetailViewModel DetailViewModel
         {
-            get => _friendDetailViewModel;
+            get => _detailViewModel;
             private set
             {
-                _friendDetailViewModel = value; 
+                _detailViewModel = value; 
                 OnPropertyChanged();
             }
         }
 
         private async void OnOpenFriendDetailView(int? friendId)
         {
-            if (FriendDetailViewModel != null && FriendDetailViewModel.HasChanges)
+            if (DetailViewModel != null && DetailViewModel.HasChanges)
             {
                 var result = _messageDialogService.ShowOkCancelDialog("You Have Made changes ! Go AnyWay ?","Changes Lose Warning");
                 if(result==MessageDialogResult.Cancel)
                     return;
             }
-            FriendDetailViewModel = FriendDetailViewModelCreator();
-            await FriendDetailViewModel.LoadAsync(friendId);
+            DetailViewModel = FriendDetailViewModelCreator();
+            await DetailViewModel.LoadAsync(friendId);
         }
 
         private void OnCreateNewFriendExecute()
