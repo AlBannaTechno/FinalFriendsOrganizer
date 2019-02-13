@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -9,6 +10,7 @@ using FriendOrganizer.Model;
 using FriendOrganizer.UI.Data;
 using FriendOrganizer.UI.Data.Repositories;
 using FriendOrganizer.UI.Event;
+using FriendOrganizer.UI.Services;
 using FriendOrganizer.UI.Wrapper;
 using Prism.Commands;
 using Prism.Events;
@@ -21,21 +23,28 @@ namespace FriendOrganizer.UI.ViewModel
         private FriendWrapper _friend;
         private readonly IEventAggregator _eventAggregator;
         private bool _hashChanges;
+        private IMessageDialogService _messageDialogService;
 
-        public FriendDetailViewModel(IFriendRepository friendRrepository,IEventAggregator eventAggregator)
+        public FriendDetailViewModel(IFriendRepository friendRrepository,IEventAggregator eventAggregator
+            ,IMessageDialogService messageDialogService)
         {
             _friendRepository = friendRrepository;
             _eventAggregator = eventAggregator;
-         
-            SaveCommand=new DelegateCommand(OnSaveExecute,OnSaveCanExecute);
+            _messageDialogService = messageDialogService;
+
+            SaveCommand =new DelegateCommand(OnSaveExecute,OnSaveCanExecute);
             DeleteCommand=new DelegateCommand(OnDeleteExecute);
         }
 
         private async void OnDeleteExecute()
         {
-            _friendRepository.Remove(Friend.Model);
-            await _friendRepository.SaveAsync();
-            _eventAggregator.GetEvent<AfterFriendDeletedEvent>().Publish(Friend.Id);
+            var result = _messageDialogService.ShowOkCancelDialog($"Are Your Sure delete Frien : {Friend.FirstName} {Friend.LastName} ?","Delete Warning");
+            if (result == MessageDialogResult.Ok)
+            {
+                _friendRepository.Remove(Friend.Model);
+                await _friendRepository.SaveAsync();
+                _eventAggregator.GetEvent<AfterFriendDeletedEvent>().Publish(Friend.Id);
+            }
         }
 
         private async void OnSaveExecute()
