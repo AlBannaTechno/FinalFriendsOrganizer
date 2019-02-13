@@ -112,6 +112,7 @@ namespace FriendOrganizer.UI.ViewModel
         private async Task LoadProgrammingLanguagesLookupAsync()
         {
             ProgrammingLanguages.Clear();
+            ProgrammingLanguages.Add(new NullLookupItem(){DisplayMember = "!Not Prefered"});
             var lookup = await _programmingLanguageLookupDataService.GetProgrammingLanguageLookupAsync();
             foreach (var lookupItem in lookup)
             {
