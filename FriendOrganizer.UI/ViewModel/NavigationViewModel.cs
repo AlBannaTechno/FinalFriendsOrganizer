@@ -25,8 +25,15 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void AfterFriendSaved(AfterFriendSavedEventArgs friendItem)
         {
-            NavigationItemViewModel friend =Friends.Single(f => f.Id == friendItem.Id);
-            friend.DisplayMember = friendItem.DisplayMember;
+            NavigationItemViewModel friend =Friends.SingleOrDefault(f => f.Id == friendItem.Id);
+            if (friend==null)
+            {
+                Friends.Add(new NavigationItemViewModel(friendItem.Id,friendItem.DisplayMember,_eventAggregator));
+            }
+            else
+            {
+                friend.DisplayMember = friendItem.DisplayMember;
+            }
         }
 
         public async Task LoadAsync()
