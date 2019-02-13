@@ -16,7 +16,7 @@ namespace FriendOrganizer.DataAccess.Migrations
                     })
                 .PrimaryKey(t => t.Id);
             
-            AddColumn("dbo.Friend", "FavoriteLangugeId", c => c.Int());
+            AddColumn("dbo.Friend", "FavoriteLanguageId", c => c.Int());
             AddColumn("dbo.Friend", "FavoriteLanguage_Id", c => c.Int());
             CreateIndex("dbo.Friend", "FavoriteLanguage_Id");
             AddForeignKey("dbo.Friend", "FavoriteLanguage_Id", "dbo.ProgrammingLanguage", "Id");
@@ -27,7 +27,7 @@ namespace FriendOrganizer.DataAccess.Migrations
             DropForeignKey("dbo.Friend", "FavoriteLanguage_Id", "dbo.ProgrammingLanguage");
             DropIndex("dbo.Friend", new[] { "FavoriteLanguage_Id" });
             DropColumn("dbo.Friend", "FavoriteLanguage_Id");
-            DropColumn("dbo.Friend", "FavoriteLangugeId");
+            DropColumn("dbo.Friend", "FavoriteLanguageId");
             DropTable("dbo.ProgrammingLanguage");
         }
     }
