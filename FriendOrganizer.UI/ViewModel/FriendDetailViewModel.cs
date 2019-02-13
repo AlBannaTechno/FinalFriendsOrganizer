@@ -69,6 +69,11 @@ namespace FriendOrganizer.UI.ViewModel
             };
 
             ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            if (Friend.Id==0)
+            {
+                // Little trick to trigger the validation when creating new friend
+                Friend.FirstName = "";
+            }
         }
 
         private Friend CreateNewFriend()
