@@ -15,6 +15,8 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
+			<RowDefinition Height="Auto" />
 			<RowDefinition Height="*" />
 			<RowDefinition Height="Auto" />
 		</Grid.RowDefinitions>
@@ -39,7 +41,18 @@
 						 Text="{Binding Friend.Email,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,TargetNullValue=''}"
 		         Margin="10,10,10,0" />
 
-		<StackPanel Grid.Row="7" Orientation="Horizontal">
+		<Label Grid.Row="6"
+		       Content="Favorite Language"
+		       Margin="10,0" />
+		<ComboBox Grid.Row="7"
+		         Margin="10,10,10,0" 
+		          ItemsSource="{Binding ProgrammingLanguages}"
+							DisplayMemberPath="DisplayMember"
+		          SelectedValuePath="Id"
+							SelectedValue="{Binding Friend.FavoriteLanguageId,Mode=TwoWay}"
+		          />
+
+		<StackPanel Grid.Row="9" Orientation="Horizontal">
 			<Button Content="Save" 
 			        Width="125" Height="35" Margin="10"
 			        Command="{Binding SaveCommand}"
