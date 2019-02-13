@@ -68,6 +68,7 @@
 				SelectedItem="{Binding SelectedPhoneNumber,Mode=TwoWay}"
 				AutoGenerateColumns="False"
 				RowHeaderWidth="0"
+				SelectionMode="Single"
 				>
 				<DataGrid.Columns>
 					<DataGridTextColumn Header="Phone Number" Width="*"

@@ -55,7 +55,17 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void OnRemovePhoneNumberExecute()
         {
-            // TODO : Need To Implement this
+            var result=_messageDialogService.ShowOkCancelDialog($"Are You Sure :Removing Phone Number : {SelectedPhoneNumber.Number}","Phone Remove Warning");
+            if (result == MessageDialogResult.Ok)
+            {
+                SelectedPhoneNumber.PropertyChanged -= FriendPhoneNumberWrapper_PropertyChanged;
+                _friendRepository.RemovePhoneNumber(SelectedPhoneNumber.Model);
+//                Friend.Model.PhoneNumbers.Remove(SelectedPhoneNumber.Model); // We can't do that
+                PhoneNumbers.Remove(SelectedPhoneNumber);
+                SelectedPhoneNumber = null;
+                HasChanges = _friendRepository.HasChanges();
+                ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
+            }
         }
 
         private void OnAddPhoneNumberExecute()

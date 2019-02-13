@@ -60,5 +60,6 @@
 				</Trigger>
 			</Style.Triggers>
 		</Style>
+		<!-- https://stackoverflow.com/questions/666269/styling-nested-elements-in-wpf -->
 	</Application.Resources>
 </Application>
