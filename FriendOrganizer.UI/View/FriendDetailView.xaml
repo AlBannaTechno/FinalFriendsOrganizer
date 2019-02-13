@@ -71,6 +71,8 @@
 				<DataGrid.Columns>
 					<DataGridTextColumn Header="Phone Number" Width="*"
 					                    Binding="{Binding Number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+					                    ElementStyle="{StaticResource DataGriColumnStyle}"
+															EditingElementStyle="{StaticResource DataGridEitingColumnStyle}"
 					                    />
 				</DataGrid.Columns>
 			</DataGrid>
