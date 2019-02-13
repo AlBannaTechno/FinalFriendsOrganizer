@@ -26,10 +26,17 @@ namespace FriendOrganizer.UI.ViewModel
             _messageDialogService = messageDialogService;
             _eventAggregator.GetEvent<OpenFriendDetailViewEvent>()
                 .Subscribe(OnOpenFriendDetailView);
+            _eventAggregator.GetEvent<AfterFriendDeletedEvent>()
+                .Subscribe(AfterFriendDeleted);
 
             FriendDetailViewModelCreator = friendDetailViewModelCreatorCreator;
 
             CreateNewFriendCommand=new DelegateCommand(OnCreateNewFriendExecute);
+        }
+
+        private void AfterFriendDeleted(int obj)
+        {
+            FriendDetailViewModel = null;
         }
 
         public async Task LoadAsync()
