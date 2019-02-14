@@ -1,21 +1,22 @@
-﻿
-using System;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using FriendOrganizer.UI.Event;
+﻿using FriendOrganizer.UI.Event;
 using FriendOrganizer.UI.Services;
 using Prism.Commands;
 using Prism.Events;
+using System;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    public class MainViewModel:ViewModelBase
+    public class MainViewModel : ViewModelBase
     {
         private IEventAggregator _eventAggregator;
-        private IDetailViewModel _detailViewModel;
-        private IMessageDialogService _messageDialogService;
-        public Func<IFriendDetailViewModel> FriendDetailViewModelCreator { get; set; }
 
+        private IDetailViewModel _detailViewModel;
+
+        private IMessageDialogService _messageDialogService;
+
+        public Func<IFriendDetailViewModel> FriendDetailViewModelCreator { get; set; }
 
         public MainViewModel(INavigationViewModel navigationViewModel,
             Func<IFriendDetailViewModel> friendDetailViewModelCreator, IEventAggregator eventAggregator,
@@ -31,7 +32,7 @@ namespace FriendOrganizer.UI.ViewModel
 
             FriendDetailViewModelCreator = friendDetailViewModelCreator;
 
-            CreateNewDetailCommand=new DelegateCommand<Type>(OnCreateNewDetailExecute);
+            CreateNewDetailCommand = new DelegateCommand<Type>(OnCreateNewDetailExecute);
         }
 
         private void AfterDetailDeleted(AfterDetailDeletedEventArgs args)
@@ -53,7 +54,7 @@ namespace FriendOrganizer.UI.ViewModel
             get => _detailViewModel;
             private set
             {
-                _detailViewModel = value; 
+                _detailViewModel = value;
                 OnPropertyChanged();
             }
         }
@@ -62,8 +63,8 @@ namespace FriendOrganizer.UI.ViewModel
         {
             if (DetailViewModel != null && DetailViewModel.HasChanges)
             {
-                var result = _messageDialogService.ShowOkCancelDialog("You Have Made changes ! Go AnyWay ?","Changes Lose Warning");
-                if(result==MessageDialogResult.Cancel)
+                var result = _messageDialogService.ShowOkCancelDialog("You Have Made changes ! Go AnyWay ?", "Changes Lose Warning");
+                if (result == MessageDialogResult.Cancel)
                     return;
             }
 
@@ -79,7 +80,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void OnCreateNewDetailExecute(Type viewModelType)
         {
-            OnOpenDetailView(new OpenDetailViewEventArgs(){ViewModelName = viewModelType .Name});
+            OnOpenDetailView(new OpenDetailViewEventArgs() { ViewModelName = viewModelType.Name });
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using FriendOrganizer.UI.ViewModel;
+﻿using FriendOrganizer.UI.ViewModel;
+using System.Windows;
 
 namespace FriendOrganizer.UI
 {
@@ -15,7 +15,7 @@ namespace FriendOrganizer.UI
             InitializeComponent();
             _viewModel = viewModel;
             DataContext = _viewModel;
-            Loaded+=OnLoaded;
+            Loaded += OnLoaded;
         }
 
         private async void OnLoaded(object sender, RoutedEventArgs e)

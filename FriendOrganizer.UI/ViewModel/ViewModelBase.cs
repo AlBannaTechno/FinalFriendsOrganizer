@@ -1,13 +1,11 @@
-﻿using System.ComponentModel;
+﻿using FriendOrganizer.UI.Annotations;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using FriendOrganizer.UI.Annotations;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    public class ViewModelBase:INotifyPropertyChanged
+    public class ViewModelBase : INotifyPropertyChanged
     {
-        #region INotifyPropertyChanged : implementation Generated With Resharper
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         [NotifyPropertyChangedInvocator]
@@ -15,8 +13,5 @@ namespace FriendOrganizer.UI.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        #endregion
-
     }
 }

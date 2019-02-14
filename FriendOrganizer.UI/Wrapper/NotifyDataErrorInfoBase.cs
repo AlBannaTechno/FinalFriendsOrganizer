@@ -1,14 +1,13 @@
-﻿using System;
+﻿using FriendOrganizer.UI.ViewModel;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using FriendOrganizer.UI.ViewModel;
 
 namespace FriendOrganizer.UI.Wrapper
 {
-    public class NotifyDataErrorInfoBase:ViewModelBase, INotifyDataErrorInfo
+    public class NotifyDataErrorInfoBase : ViewModelBase, INotifyDataErrorInfo
     {
         private readonly Dictionary<string, List<string>> _errorsBtPropertyName =
             new Dictionary<string, List<string>>();
@@ -19,8 +18,11 @@ namespace FriendOrganizer.UI.Wrapper
                 _errorsBtPropertyName[propertyName] :
                 null;
         }
+
         public bool HasErrors => _errorsBtPropertyName.Any();
+
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
+
         // https://stackoverflow.com/questions/1062102/practical-usage-of-virtual-functions-in-c-sharp
         protected virtual void OnErrorsChanged(string propertyName)
         {

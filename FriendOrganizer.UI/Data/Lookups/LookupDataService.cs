@@ -1,10 +1,10 @@
-﻿using System;
+﻿using FriendOrganizer.DataAccess;
+using FriendOrganizer.Model;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
-using FriendOrganizer.DataAccess;
-using FriendOrganizer.Model;
 
 namespace FriendOrganizer.UI.Data.Lookups
 {
@@ -28,10 +28,11 @@ namespace FriendOrganizer.UI.Data.Lookups
                         new LookupItem()
                         {
                             Id = f.Id,
-                            DisplayMember = f.FirstName+" "+f.LastName
+                            DisplayMember = f.FirstName + " " + f.LastName
                         }).ToListAsync();
             }
         }
+
         public async Task<IEnumerable<LookupItem>> GetProgrammingLanguageLookupAsync()
         {
             using (var ctx = _contextCreator())

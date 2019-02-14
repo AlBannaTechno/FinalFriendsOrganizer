@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {
-    public class GenericRepository<TEntity,TContext>: IGenericRepository<TEntity>
+    public class GenericRepository<TEntity, TContext> : IGenericRepository<TEntity>
         where TContext : DbContext
-        where TEntity  : class 
+        where TEntity : class
     {
         // protected constructor mean this constructor/class only can use as a base class for it'schild
         // not with new keyword
@@ -19,7 +19,6 @@ namespace FriendOrganizer.UI.Data.Repositories
         public virtual async Task<TEntity> GetByIdAsync(int id)
         {
             return await Context.Set<TEntity>().FindAsync(id);
-
         }
 
         public async Task SaveAsync()

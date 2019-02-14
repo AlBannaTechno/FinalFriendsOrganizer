@@ -1,7 +1,7 @@
-﻿using System.Windows.Input;
-using FriendOrganizer.UI.Event;
+﻿using FriendOrganizer.UI.Event;
 using Prism.Commands;
 using Prism.Events;
+using System.Windows.Input;
 
 namespace FriendOrganizer.UI.ViewModel.Helper
 {
@@ -10,17 +10,16 @@ namespace FriendOrganizer.UI.ViewModel.Helper
      * Inside LookupItem model class
      * Because we need Models to be fully isolated
      */
-    public class NavigationItemViewModel:ViewModelBase
+    public class NavigationItemViewModel : ViewModelBase
     {
-
-        public NavigationItemViewModel(int id,string displayMember,IEventAggregator eventAggregator,
+        public NavigationItemViewModel(int id, string displayMember, IEventAggregator eventAggregator,
             string detailViewModelName)
         {
             Id = id;
             DisplayMember = displayMember;
             _eventAggregator = eventAggregator;
             _detailViewModelName = detailViewModelName;
-            OpenDetailViewCommand =new DelegateCommand(OnOpenDetailViewExecute);
+            OpenDetailViewCommand = new DelegateCommand(OnOpenDetailViewExecute);
         }
 
         private void OnOpenDetailViewExecute()
@@ -30,13 +29,16 @@ namespace FriendOrganizer.UI.ViewModel.Helper
                 {
                     Id = Id,
                     ViewModelName = _detailViewModelName
-                    
+
                 });
         }
 
         public int Id { get; }
+
         private string _displayMember;
+
         private IEventAggregator _eventAggregator;
+
         private string _detailViewModelName;
 
         public string DisplayMember
@@ -48,6 +50,7 @@ namespace FriendOrganizer.UI.ViewModel.Helper
                 OnPropertyChanged();
             }
         }
+
         public ICommand OpenDetailViewCommand { get; }
     }
 }

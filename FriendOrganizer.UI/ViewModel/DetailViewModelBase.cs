@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using FriendOrganizer.UI.Event;
+﻿using FriendOrganizer.UI.Event;
 using Prism.Commands;
 using Prism.Events;
+using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    public abstract class DetailViewModelBase:ViewModelBase,IDetailViewModel
+    public abstract class DetailViewModelBase : ViewModelBase, IDetailViewModel
     {
         private bool _hasChanges;
+
         protected readonly IEventAggregator EventAggregator;
+
         public DetailViewModelBase(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;
-            SaveCommand=new DelegateCommand(OnSaveExecute,OnSaveCanExecute);
-            DeleteCommand=new DelegateCommand(OnDeleteExecute);
+            SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
+            DeleteCommand = new DelegateCommand(OnDeleteExecute);
         }
 
         // means sub class must implement them
@@ -29,7 +27,6 @@ namespace FriendOrganizer.UI.ViewModel
         protected abstract void OnSaveExecute();
 
         public abstract Task LoadAsync(int? id);
-
 
         public bool HasChanges
         {
@@ -44,7 +41,9 @@ namespace FriendOrganizer.UI.ViewModel
                 }
             }
         }
+
         public ICommand SaveCommand { get; private set; }
+
         public ICommand DeleteCommand { get; private set; }
 
         protected virtual void RaisDetailDeletedEvent(int modelId)
@@ -59,7 +58,7 @@ namespace FriendOrganizer.UI.ViewModel
                 );
         }
 
-        protected virtual void RaisDetailSavedEvent(int modelId,string displayMember)
+        protected virtual void RaisDetailSavedEvent(int modelId, string displayMember)
         {
             EventAggregator.GetEvent<AfterDetailSavedEvent>().Publish(
                 new AfterDetailSavedEventArgs()

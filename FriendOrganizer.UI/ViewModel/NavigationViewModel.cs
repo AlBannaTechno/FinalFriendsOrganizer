@@ -1,25 +1,25 @@
-﻿using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using FriendOrganizer.Model;
-using FriendOrganizer.UI.Data;
+﻿using FriendOrganizer.Model;
 using FriendOrganizer.UI.Data.Lookups;
 using FriendOrganizer.UI.Event;
 using FriendOrganizer.UI.ViewModel.Helper;
 using Prism.Events;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    public class NavigationViewModel : ViewModelBase,INavigationViewModel
+    public class NavigationViewModel : ViewModelBase, INavigationViewModel
     {
         private readonly IFriendLookupDataService _friendLookupService;
+
         private IEventAggregator _eventAggregator;
 
-        public NavigationViewModel(IFriendLookupDataService friendLookupService,IEventAggregator eventAggregator)
+        public NavigationViewModel(IFriendLookupDataService friendLookupService, IEventAggregator eventAggregator)
         {
             _friendLookupService = friendLookupService;
             _eventAggregator = eventAggregator;
-            Friends =new ObservableCollection<NavigationItemViewModel>();
+            Friends = new ObservableCollection<NavigationItemViewModel>();
             _eventAggregator.GetEvent<AfterDetailSavedEvent>().Subscribe(AfterDetailSaved);
             _eventAggregator.GetEvent<AfterDetailDeletedEvent>().Subscribe(AfterDetailDeleted);
         }
@@ -56,20 +56,20 @@ namespace FriendOrganizer.UI.ViewModel
                     }
                     break;
             }
-
         }
 
         public async Task LoadAsync()
         {
-            var lookup =await _friendLookupService.GetFriendLookupAsync();
+            var lookup = await _friendLookupService.GetFriendLookupAsync();
             Friends.Clear();
             foreach (LookupItem friend in lookup)
             {
-                Friends.Add(new NavigationItemViewModel(friend.Id,friend.DisplayMember,_eventAggregator,
+                Friends.Add(new NavigationItemViewModel(friend.Id, friend.DisplayMember, _eventAggregator,
                     nameof(FriendDetailViewModel)
                     ));
             }
         }
-        public ObservableCollection<NavigationItemViewModel> Friends { get;}
+
+        public ObservableCollection<NavigationItemViewModel> Friends { get; }
     }
 }

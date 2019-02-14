@@ -1,15 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Autofac;
+using FriendOrganizer.UI.Startup;
 using System.Windows;
 using System.Windows.Threading;
-using Autofac;
-using FriendOrganizer.UI.Data;
-using FriendOrganizer.UI.Startup;
-using FriendOrganizer.UI.ViewModel;
 
 namespace FriendOrganizer.UI
 {
