@@ -18,18 +18,18 @@ namespace FriendOrganizer.UI.ViewModel
 
 
         public MainViewModel(INavigationViewModel navigationViewModel,
-            Func<IFriendDetailViewModel> friendDetailViewModelCreatorCreator, IEventAggregator eventAggregator,
+            Func<IFriendDetailViewModel> friendDetailViewModelCreator, IEventAggregator eventAggregator,
             IMessageDialogService messageDialogService)
         {
             NavigationViewModel = navigationViewModel;
             _eventAggregator = eventAggregator;
             _messageDialogService = messageDialogService;
-            _eventAggregator.GetEvent<OpenFriendDetailViewEvent>()
-                .Subscribe(OnOpenFriendDetailView);
+            _eventAggregator.GetEvent<OpenDetailViewEvent>()
+                .Subscribe(OnOpenDetailView);
             _eventAggregator.GetEvent<AfterFriendDeletedEvent>()
                 .Subscribe(AfterFriendDeleted);
 
-            FriendDetailViewModelCreator = friendDetailViewModelCreatorCreator;
+            FriendDetailViewModelCreator = friendDetailViewModelCreator;
 
             CreateNewFriendCommand=new DelegateCommand(OnCreateNewFriendExecute);
         }
@@ -58,7 +58,7 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        private async void OnOpenFriendDetailView(int? friendId)
+        private async void OnOpenDetailView(OpenDetailViewEventArgs args)
         {
             if (DetailViewModel != null && DetailViewModel.HasChanges)
             {
@@ -66,13 +66,20 @@ namespace FriendOrganizer.UI.ViewModel
                 if(result==MessageDialogResult.Cancel)
                     return;
             }
-            DetailViewModel = FriendDetailViewModelCreator();
-            await DetailViewModel.LoadAsync(friendId);
+
+            switch (args.ViewModelName)
+            {
+                case nameof(FriendDetailViewModel):
+                    DetailViewModel = FriendDetailViewModelCreator();
+                    break;
+            }
+
+            if (DetailViewModel != null) await DetailViewModel.LoadAsync(args.Id);
         }
 
         private void OnCreateNewFriendExecute()
         {
-            OnOpenFriendDetailView(null);
+            OnOpenDetailView(null);
         }
     }
 }
