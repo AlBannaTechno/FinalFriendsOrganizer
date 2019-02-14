@@ -20,9 +20,9 @@ namespace FriendOrganizer.UI.ViewModel
 
         private FriendWrapper _friend;
 
-        private IMessageDialogService _messageDialogService;
+        private readonly IMessageDialogService _messageDialogService;
 
-        private IProgrammingLanguageLookupDataService _programmingLanguageLookupDataService;
+        private readonly IProgrammingLanguageLookupDataService _programmingLanguageLookupDataService;
 
         public FriendDetailViewModel(IFriendRepository friendRrepository, IEventAggregator eventAggregator
             , IMessageDialogService messageDialogService,

@@ -37,9 +37,9 @@ namespace FriendOrganizer.UI.ViewModel.Helper
 
         private string _displayMember;
 
-        private IEventAggregator _eventAggregator;
+        private readonly IEventAggregator _eventAggregator;
 
-        private string _detailViewModelName;
+        private readonly string _detailViewModelName;
 
         public string DisplayMember
         {

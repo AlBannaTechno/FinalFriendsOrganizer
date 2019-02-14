@@ -1,10 +1,10 @@
 ﻿<UserControl x:Class="FriendOrganizer.UI.View.FriendDetailView"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:FriendOrganizer.UI.View"
-             mc:Ignorable="d" 
+             mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 	<Grid>
 		<Grid.RowDefinitions>
@@ -31,60 +31,56 @@
 		       Content="Lastname"
 		       Margin="10,0" />
 		<TextBox Grid.Row="3"
-						 Text="{Binding Friend.LastName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+		         Text="{Binding Friend.LastName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 		         Margin="10,0" />
 
 		<Label Grid.Row="4"
 		       Content="Email"
 		       Margin="10,0" />
 		<TextBox Grid.Row="5"
-						 Text="{Binding Friend.Email,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,TargetNullValue=''}"
+		         Text="{Binding Friend.Email,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged,TargetNullValue=''}"
 		         Margin="10,10,10,0" />
 
 		<Label Grid.Row="6"
 		       Content="Favorite Language"
 		       Margin="10,0" />
 		<ComboBox Grid.Row="7"
-		         Margin="10,10,10,0" 
+		          Margin="10,10,10,0"
 		          ItemsSource="{Binding ProgrammingLanguages}"
-							DisplayMemberPath="DisplayMember"
+		          DisplayMemberPath="DisplayMember"
 		          SelectedValuePath="Id"
-							SelectedValue="{Binding Friend.FavoriteLanguageId,Mode=TwoWay}"
-		          />
+		          SelectedValue="{Binding Friend.FavoriteLanguageId,Mode=TwoWay}" />
 
-		<DockPanel Grid.Row="8" Margin="10" >
+		<DockPanel Grid.Row="8" Margin="10">
 			<StackPanel DockPanel.Dock="Right">
 				<Button Width="125"
-								Margin="10"
-								Content="Add"
-								Command="{Binding AddPhoneNumberCommand}" />
+				        Margin="10"
+				        Content="Add"
+				        Command="{Binding AddPhoneNumberCommand}" />
 				<Button Width="125"
-								Margin="10"
-								Content="Remove"
-								Command="{Binding RemovePhoneNumberCommand}" />
+				        Margin="10"
+				        Content="Remove"
+				        Command="{Binding RemovePhoneNumberCommand}" />
 			</StackPanel>
 			<DataGrid
 				ItemsSource="{Binding PhoneNumbers}"
 				SelectedItem="{Binding SelectedPhoneNumber,Mode=TwoWay}"
 				AutoGenerateColumns="False"
 				RowHeaderWidth="0"
-				SelectionMode="Single"
-				>
+				SelectionMode="Single">
 				<DataGrid.Columns>
 					<DataGridTextColumn Header="Phone Number" Width="*"
 					                    Binding="{Binding Number,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
 					                    ElementStyle="{StaticResource DataGriColumnStyle}"
-															EditingElementStyle="{StaticResource DataGridEitingColumnStyle}"
-					                    />
+					                    EditingElementStyle="{StaticResource DataGridEitingColumnStyle}" />
 				</DataGrid.Columns>
 			</DataGrid>
 		</DockPanel>
 
 		<StackPanel Grid.Row="9" Orientation="Horizontal">
-			<Button Content="Save" 
+			<Button Content="Save"
 			        Width="125" Height="35" Margin="10"
-			        Command="{Binding SaveCommand}"
-			        />
+			        Command="{Binding SaveCommand}" />
 			<Button Content="Delete"
 			        Width="125"
 			        Height="35"

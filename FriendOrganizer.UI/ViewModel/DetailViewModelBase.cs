@@ -12,7 +12,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         protected readonly IEventAggregator EventAggregator;
 
-        public DetailViewModelBase(IEventAggregator eventAggregator)
+        protected DetailViewModelBase(IEventAggregator eventAggregator)
         {
             EventAggregator = eventAggregator;
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);

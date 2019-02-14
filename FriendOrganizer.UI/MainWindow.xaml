@@ -4,21 +4,20 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FriendOrganizer.UI"
-				xmlns:view="clr-namespace:FriendOrganizer.UI.View"
-				xmlns:viewModel="clr-namespace:FriendOrganizer.UI.ViewModel"
+        xmlns:view="clr-namespace:FriendOrganizer.UI.View"
+        xmlns:viewModel="clr-namespace:FriendOrganizer.UI.ViewModel"
         mc:Ignorable="d"
         Title="FriendOrganizer" Height="700" Width="1000" FontSize="20"
         WindowStartupLocation="CenterScreen"
-				Topmost="True"
-        >
+        Topmost="True">
 	<Window.Resources>
 		<DataTemplate DataType="{x:Type viewModel:FriendDetailViewModel}">
-			<view:FriendDetailView/>
+			<view:FriendDetailView />
 		</DataTemplate>
 	</Window.Resources>
 	<Grid>
 		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
+			<RowDefinition Height="Auto" />
 			<RowDefinition />
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
@@ -28,18 +27,17 @@
 		<Menu Grid.ColumnSpan="2">
 			<MenuItem Header="Create">
 				<MenuItem Header="New Friend" Command="{Binding CreateNewDetailCommand}"
-				          CommandParameter="{x:Type viewModel:FriendDetailViewModel}"
-				          />
+				          CommandParameter="{x:Type viewModel:FriendDetailViewModel}" />
 			</MenuItem>
 		</Menu>
 		<view:NavigationView
 			Grid.Row="1"
 			Grid.Column="0"
-			DataContext="{Binding NavigationViewModel}"/>
-		<ContentControl 
+			DataContext="{Binding NavigationViewModel}" />
+		<ContentControl
 			Grid.Row="1"
-			Grid.Column="1" 
-			Content="{Binding DetailViewModel}"/>
+			Grid.Column="1"
+			Content="{Binding DetailViewModel}" />
 
 	</Grid>
 </Window>

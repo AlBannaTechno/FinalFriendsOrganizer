@@ -12,8 +12,8 @@
 			<ItemsControl ItemsSource="{Binding Friends}">
 				<ItemsControl.ItemContainerStyle>
 					<Style TargetType="ContentPresenter">
-						<Setter Property="HorizontalAlignment" Value="Left"/>
-						<Setter Property="Margin" Value="2"/>
+						<Setter Property="HorizontalAlignment" Value="Left" />
+						<Setter Property="Margin" Value="2" />
 					</Style>
 				</ItemsControl.ItemContainerStyle>
 				<ItemsControl.ItemTemplate>

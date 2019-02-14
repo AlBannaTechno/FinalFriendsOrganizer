@@ -10,11 +10,9 @@ namespace FriendOrganizer.UI.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private IEventAggregator _eventAggregator;
-
         private IDetailViewModel _detailViewModel;
 
-        private IMessageDialogService _messageDialogService;
+        private readonly IMessageDialogService _messageDialogService;
 
         public Func<IFriendDetailViewModel> FriendDetailViewModelCreator { get; set; }
 
@@ -23,11 +21,11 @@ namespace FriendOrganizer.UI.ViewModel
             IMessageDialogService messageDialogService)
         {
             NavigationViewModel = navigationViewModel;
-            _eventAggregator = eventAggregator;
+            var eventAggregator1 = eventAggregator;
             _messageDialogService = messageDialogService;
-            _eventAggregator.GetEvent<OpenDetailViewEvent>()
+            eventAggregator1.GetEvent<OpenDetailViewEvent>()
                 .Subscribe(OnOpenDetailView);
-            _eventAggregator.GetEvent<AfterDetailDeletedEvent>()
+            eventAggregator1.GetEvent<AfterDetailDeletedEvent>()
                 .Subscribe(AfterDetailDeleted);
 
             FriendDetailViewModelCreator = friendDetailViewModelCreator;
