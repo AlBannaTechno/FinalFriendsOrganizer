@@ -20,26 +20,23 @@ using Prism.Events;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    class FriendDetailViewModel : ViewModelBase, IFriendDetailViewModel
+    class FriendDetailViewModel : DetailViewModelBase, IFriendDetailViewModel
     {
         private readonly IFriendRepository _friendRepository;
         private FriendWrapper _friend;
-        private readonly IEventAggregator _eventAggregator;
-        private bool _hashChanges;
         private IMessageDialogService _messageDialogService;
         private IProgrammingLanguageLookupDataService _programmingLanguageLookupDataService;
 
         public FriendDetailViewModel(IFriendRepository friendRrepository,IEventAggregator eventAggregator
             ,IMessageDialogService messageDialogService,
             IProgrammingLanguageLookupDataService programmingLanguageLookupDataService)
+            :base(eventAggregator)
         {
             _friendRepository = friendRrepository;
-            _eventAggregator = eventAggregator;
             _messageDialogService = messageDialogService;
             _programmingLanguageLookupDataService = programmingLanguageLookupDataService;
 
-            SaveCommand =new DelegateCommand(OnSaveExecute,OnSaveCanExecute);
-            DeleteCommand=new DelegateCommand(OnDeleteExecute);
+
 
             AddPhoneNumberCommand=new DelegateCommand(OnAddPhoneNumberExecute);
             RemovePhoneNumberCommand=new DelegateCommand(OnRemovePhoneNumberExecute, OnRemovePhoneNumberCanExecute);
@@ -93,42 +90,32 @@ namespace FriendOrganizer.UI.ViewModel
                 ((DelegateCommand)RemovePhoneNumberCommand).RaiseCanExecuteChanged();
             }
         }
-        private async void OnDeleteExecute()
+        protected override async void OnDeleteExecute()
         {
             var result = _messageDialogService.ShowOkCancelDialog($"Are Your Sure delete Frien : {Friend.FirstName} {Friend.LastName} ?","Delete Warning");
             if (result == MessageDialogResult.Ok)
             {
                 _friendRepository.Remove(Friend.Model);
                 await _friendRepository.SaveAsync();
-                _eventAggregator.GetEvent<AfterDetailDeletedEvent>().Publish(new AfterDetailDeletedEventArgs()
-                {
-                    Id = Friend.Id,
-                    ViewModelName = nameof(FriendDetailViewModel)
-                });
+                RaisDetailDeletedEvent(Friend.Id);
             }
         }
 
-        private async void OnSaveExecute()
+        protected override async void OnSaveExecute()
         {
             await _friendRepository.SaveAsync();
             HasChanges = _friendRepository.HasChanges();
-            _eventAggregator.GetEvent<AfterDetailSavedEvent>()
-                .Publish(new AfterDetailSavedEventArgs()
-                {
-                    Id = Friend.Id,
-                    DisplayMember = Friend.FirstName +" "+Friend.LastName,
-                    ViewModelName = nameof(FriendDetailViewModel)
-                });
+            RaisDetailSavedEvent(Friend.Id, Friend.FirstName + " " + Friend.LastName);
         }
 
-        private bool OnSaveCanExecute()
+        protected override bool OnSaveCanExecute()
         {
             return Friend!=null 
                    && !Friend.HasErrors 
                    && HasChanges && PhoneNumbers.All(pn=>!pn.HasErrors);
         }
   
-        public async Task LoadAsync(int? friendId)
+        public override async Task LoadAsync(int? friendId)
         {
             var friend = friendId.HasValue
                 ? await _friendRepository.GetByIdAsync(friendId.Value)
@@ -223,27 +210,10 @@ namespace FriendOrganizer.UI.ViewModel
             }
         }
 
-        public ICommand SaveCommand { get;}
-
-        public ICommand DeleteCommand { get;}
 
         public ICommand AddPhoneNumberCommand { get; }
 
         public ICommand RemovePhoneNumberCommand { get; }
 
-
-        public bool HasChanges
-        {
-            get => _hashChanges;
-            set
-            {
-                if (HasChanges!=value)
-                {
-                    _hashChanges = value;
-                    OnPropertyChanged();
-                    ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
-                }
-            }
-        }
     }
 }

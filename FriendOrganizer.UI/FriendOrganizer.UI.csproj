@@ -80,6 +80,7 @@
     <Compile Include="Services\IMessageDialogService.cs" />
     <Compile Include="Services\MessageDialogService.cs" />
     <Compile Include="Startup\BootStrapper.cs" />
+    <Compile Include="ViewModel\DetailViewModelBase.cs" />
     <Compile Include="ViewModel\FriendDetailViewModel.cs" />
     <Compile Include="ViewModel\Helper\NavigationItemViewModel.cs" />
     <Compile Include="ViewModel\IDetailViewModel.cs" />
