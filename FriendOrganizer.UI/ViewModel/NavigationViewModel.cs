@@ -66,7 +66,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void AfterDetailSaved(ObservableCollection<NavigationItemViewModel> items, AfterDetailSavedEventArgs args)
         {
-            NavigationItemViewModel item = Friends.SingleOrDefault(f => f.Id == args.Id);
+            NavigationItemViewModel item = items.SingleOrDefault(f => f.Id == args.Id);
             if (item == null)
             {
                 items.Add(new NavigationItemViewModel(args.Id, args.DisplayMember, _eventAggregator,
