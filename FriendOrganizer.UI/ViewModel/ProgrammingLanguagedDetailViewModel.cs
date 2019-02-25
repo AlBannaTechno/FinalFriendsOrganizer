@@ -13,7 +13,7 @@ using Prism.Events;
 
 namespace FriendOrganizer.UI.ViewModel
 {
-    public class ProgrammingLanguagedDetailViewModel:DetailViewModelBase
+    public class ProgrammingLanguagedDetailViewModel:DetailViewModelBase, IProgrammingLanguagedDetailViewModel
     {
         private readonly IProgrammingLanguageRepository _programmingLanguageRepository;
 
