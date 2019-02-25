@@ -22,6 +22,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         private Friend _selectedAvailableFriend;
         private Friend _selectedAddedFriend;
+        private List<Friend> _allFriends;
 
         public MeetingDetailViewModel(
             IEventAggregator eventAggregator,
@@ -109,7 +110,33 @@ namespace FriendOrganizer.UI.ViewModel
                 : CreateNewMeeting();
             InitializeMeeting(meeting);
 
-            // TODO : Load the friends for the picklist
+            _allFriends=await _meetingRepository.GetAllFriendsAsync();
+            SetupPicklist();
+        }
+
+        private void SetupPicklist()
+        {
+
+            //            var meetingFriendIds = Meeting.Model.Friends.Select(f => f.Id).ToList();
+            //            var addedFriends = _allFriends.Where(f => meetingFriendIds.Contains(f.Id)).OrderBy(f => f.FirstName);
+            //            var availableFriends = _allFriends.Except(addedFriends).OrderBy(f=>f.FirstName);
+
+            var meetingFriends = Meeting.Model.Friends.OrderBy(f=>f.FirstName).ToList();
+            var availableFriends = _allFriends.Except(meetingFriends).OrderBy(f=>f.FirstName);
+
+
+            AddedFriends.Clear();
+            AvailableFriends.Clear();
+
+            foreach (var addedFriend in meetingFriends)
+            {
+                AddedFriends.Add(addedFriend);
+            }
+
+            foreach (var avaliableFriend in availableFriends)
+            {
+                AvailableFriends.Add(avaliableFriend);
+            }
         }
 
         private void InitializeMeeting(Meeting meeting)

@@ -50,7 +50,7 @@
 					<RowDefinition />
 				</Grid.RowDefinitions>
 
-				<Label Content="Add Friend"/>
+				<Label Content="Added Friend"/>
 				<ListView Grid.Column="0" Grid.Row="1" ItemsSource="{Binding AddedFriends}"
 				          SelectedItem="{Binding SelectedAddedFriend}"
 				          />
@@ -63,7 +63,7 @@
 				<Label Content="Available Friends" Grid.Column="2" Grid.Row="0"/>
 				<ListView Grid.Column="2" Grid.Row="1"
 				          ItemsSource="{Binding AvailableFriends}"
-									SelectedItem="{Binding SelectedAvaliableFriend}"
+									SelectedItem="{Binding SelectedAvailableFriend}"
 				          />
 			</Grid>
 
