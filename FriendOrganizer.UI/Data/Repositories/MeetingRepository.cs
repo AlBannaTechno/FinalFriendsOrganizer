@@ -6,7 +6,7 @@ namespace FriendOrganizer.UI.Data.Repositories
 {
     public class MeetingRepository:GenericRepository<Meeting,FriendOrganizerDbContext>, IMeetingRepository
     {
-        protected MeetingRepository(FriendOrganizerDbContext context) : base(context)
+        public MeetingRepository(FriendOrganizerDbContext context) : base(context)
         {
         }
 

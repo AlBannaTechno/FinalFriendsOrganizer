@@ -20,8 +20,8 @@ namespace FriendOrganizer.UI
 
         private void App_OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
         {
-            e.Handled = true;
-            MessageBox.Show(e.Exception.Message.ToString(), "Exception");
+//            e.Handled = true;
+//            MessageBox.Show(e.Exception.Message.ToString(), "Exception");
         }
     }
 }

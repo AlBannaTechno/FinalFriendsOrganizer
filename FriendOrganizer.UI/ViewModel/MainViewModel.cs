@@ -12,23 +12,28 @@ namespace FriendOrganizer.UI.ViewModel
     {
         private IDetailViewModel _detailViewModel;
 
+        private readonly Func<IMeetingDetailViewModel> _meetingDetailViewModelCreator;
         private readonly IMessageDialogService _messageDialogService;
 
-        public Func<IFriendDetailViewModel> FriendDetailViewModelCreator { get; set; }
+        private readonly Func<IFriendDetailViewModel> _friendDetailViewModelCreator;
 
         public MainViewModel(INavigationViewModel navigationViewModel,
-            Func<IFriendDetailViewModel> friendDetailViewModelCreator, IEventAggregator eventAggregator,
+            Func<IFriendDetailViewModel> friendDetailViewModelCreator,
+            Func<IMeetingDetailViewModel> meetingDetailViewModelCreator,
+            
+            IEventAggregator eventAggregator,
             IMessageDialogService messageDialogService)
         {
             NavigationViewModel = navigationViewModel;
             var eventAggregator1 = eventAggregator;
+            _meetingDetailViewModelCreator = meetingDetailViewModelCreator;
             _messageDialogService = messageDialogService;
             eventAggregator1.GetEvent<OpenDetailViewEvent>()
                 .Subscribe(OnOpenDetailView);
             eventAggregator1.GetEvent<AfterDetailDeletedEvent>()
                 .Subscribe(AfterDetailDeleted);
 
-            FriendDetailViewModelCreator = friendDetailViewModelCreator;
+            _friendDetailViewModelCreator = friendDetailViewModelCreator;
 
             CreateNewDetailCommand = new DelegateCommand<Type>(OnCreateNewDetailExecute);
         }
@@ -69,8 +74,13 @@ namespace FriendOrganizer.UI.ViewModel
             switch (args.ViewModelName)
             {
                 case nameof(FriendDetailViewModel):
-                    DetailViewModel = FriendDetailViewModelCreator();
+                    DetailViewModel = _friendDetailViewModelCreator();
                     break;
+                case nameof(MeetingDetailViewModel):
+                    DetailViewModel = _meetingDetailViewModelCreator();
+                    break;
+                default:
+                    throw new ArgumentNullException($"ViewModel {args.ViewModelName} not mapped");
             }
 
             if (DetailViewModel != null) await DetailViewModel.LoadAsync(args.Id);
