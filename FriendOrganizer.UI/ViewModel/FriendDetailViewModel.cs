@@ -11,6 +11,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using FriendOrganizer.UI.Event;
 
 namespace FriendOrganizer.UI.ViewModel
 {
@@ -31,7 +32,7 @@ namespace FriendOrganizer.UI.ViewModel
             _friendRepository = friendRrepository;
             _programmingLanguageLookupDataService = programmingLanguageLookupDataService;
 
-
+            eventAggregator.GetEvent<AfterCollectionSavedEvent>().Subscribe(AfterCollectionSaved);
 
             AddPhoneNumberCommand = new DelegateCommand(OnAddPhoneNumberExecute);
             RemovePhoneNumberCommand = new DelegateCommand(OnRemovePhoneNumberExecute, OnRemovePhoneNumberCanExecute);
@@ -39,6 +40,8 @@ namespace FriendOrganizer.UI.ViewModel
             ProgrammingLanguages = new ObservableCollection<LookupItem>();
             PhoneNumbers = new ObservableCollection<FriendPhoneNumberWrapper>();
         }
+
+
 
         private bool OnRemovePhoneNumberCanExecute()
         {
@@ -200,6 +203,15 @@ namespace FriendOrganizer.UI.ViewModel
         private void SetTitle()
         {
             Title = $"{Friend.FirstName} {Friend.LastName}";
+        }
+
+
+        private async void AfterCollectionSaved(AfterCollectionSavedEventArgs args)
+        {
+            if (args.ViewModelName==nameof(ProgrammingLanguagedDetailViewModel))
+            {
+                await LoadProgrammingLanguagesLookupAsync();
+            }
         }
 
         private async Task LoadProgrammingLanguagesLookupAsync()

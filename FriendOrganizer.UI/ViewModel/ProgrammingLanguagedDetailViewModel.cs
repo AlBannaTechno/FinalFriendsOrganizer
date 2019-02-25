@@ -43,6 +43,7 @@ namespace FriendOrganizer.UI.ViewModel
         {
             await _programmingLanguageRepository.SaveAsync();
             HasChanges = _programmingLanguageRepository.HasChanges();
+            RaisCollectionSavedEvent();
         }
 
         public override async Task LoadAsync(int id)

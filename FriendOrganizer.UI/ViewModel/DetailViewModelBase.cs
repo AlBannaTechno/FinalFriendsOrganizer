@@ -74,6 +74,15 @@ namespace FriendOrganizer.UI.ViewModel
 
         public ICommand DeleteCommand { get; private set; }
 
+
+        protected virtual void RaisCollectionSavedEvent()
+        {
+            EventAggregator.GetEvent<AfterCollectionSavedEvent>().Publish(new AfterCollectionSavedEventArgs()
+            {
+                ViewModelName = this.GetType().Name
+            });
+        }
+
         protected virtual void RaisDetailDeletedEvent(int modelId)
         {
             EventAggregator.GetEvent<AfterDetailDeletedEvent>().Publish(
