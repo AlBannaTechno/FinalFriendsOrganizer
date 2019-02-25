@@ -90,6 +90,12 @@ namespace FriendOrganizer.UI.ViewModel
 
         protected override async void OnDeleteExecute()
         {
+            if (await _friendRepository.HasMeetingsAsync(Friend.Id))
+            {
+                _messageDialogService.ShowInfoDialog($"Can't Remove {Friend.FirstName} {Friend.LastName} : This has at least one meeting!");
+                return;
+            }
+
             var result = _messageDialogService.ShowOkCancelDialog($"Are Your Sure delete Frien : {Friend.FirstName} {Friend.LastName} ?", "Delete Warning");
             if (result == MessageDialogResult.Ok)
             {
@@ -97,6 +103,7 @@ namespace FriendOrganizer.UI.ViewModel
                 await _friendRepository.SaveAsync();
                 RaisDetailDeletedEvent(Friend.Id);
             }
+
         }
 
         protected override async void OnSaveExecute()
