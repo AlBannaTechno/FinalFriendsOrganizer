@@ -98,7 +98,11 @@ namespace FriendOrganizer.UI.ViewModel
 
         protected virtual void OnCloseDetailViewExecute()
         {
-
+            EventAggregator.GetEvent<AfterDetailClosedEvent>().Publish(new AfterDetailClosedEventArgs()
+            {
+                Id = this.Id,
+                ViewModelName = this.GetType().Name
+            });
         }
     }
 }
