@@ -16,6 +16,7 @@ namespace FriendOrganizer.UI.ViewModel
         private IDetailViewModel _selectedDetailViewModel;
         private readonly IMessageDialogService _messageDialogService;
         private readonly IIndex<string, IDetailViewModel> _detailViewModelCreator;
+        private readonly IEventAggregator _eventAggregator;
 
         public MainViewModel(INavigationViewModel navigationViewModel,
             
@@ -24,29 +25,43 @@ namespace FriendOrganizer.UI.ViewModel
             IIndex<string,IDetailViewModel> detailViewModelCreator)
         {
             NavigationViewModel = navigationViewModel;
-            var eventAggregator1 = eventAggregator;
+            _eventAggregator = eventAggregator;
             _messageDialogService = messageDialogService;
             _detailViewModelCreator = detailViewModelCreator;
             DetailViewModels = new ObservableCollection<IDetailViewModel>();
-            eventAggregator1.GetEvent<OpenDetailViewEvent>()
+            _eventAggregator.GetEvent<OpenDetailViewEvent>()
                 .Subscribe(OnOpenDetailView);
-            eventAggregator1.GetEvent<AfterDetailDeletedEvent>()
+            _eventAggregator.GetEvent<AfterDetailDeletedEvent>()
                 .Subscribe(AfterDetailDeleted);
+            _eventAggregator.GetEvent<AfterDetailClosedEvent>()
+                .Subscribe(AfterDetailClosed);
+            
 
 
             CreateNewDetailCommand = new DelegateCommand<Type>(OnCreateNewDetailExecute);
         }
 
+       
+
         private void AfterDetailDeleted(AfterDetailDeletedEventArgs args)
         {
+            if (args.Id != null) RemoveDetailViewModel(args.Id.Value, args.ViewModelName);
+        }
+
+        private void AfterDetailClosed(AfterDetailClosedEventArgs args)
+        {
+            RemoveDetailViewModel(args.Id, args.ViewModelName);
+        }
+
+        private void RemoveDetailViewModel(int id,string viewModelName)
+        {
             var detailViewModel = DetailViewModels
-                .SingleOrDefault(vm => vm.Id == args.Id && vm.GetType().Name == args.ViewModelName);
-            if (detailViewModel!=null)
+                .SingleOrDefault(vm => vm.Id == id && vm.GetType().Name == viewModelName);
+            if (detailViewModel != null)
             {
                 DetailViewModels.Remove(detailViewModel);
             }
         }
-
         public async Task LoadAsync()
         {
             await NavigationViewModel.LoadAsync();
