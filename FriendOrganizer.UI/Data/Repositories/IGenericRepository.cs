@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {
@@ -7,6 +8,8 @@ namespace FriendOrganizer.UI.Data.Repositories
         Task<T> GetByIdAsync(int id);
 
         Task SaveAsync();
+
+        Task<IEnumerable<T>> GetAllAsync();
 
         bool HasChanges();
 

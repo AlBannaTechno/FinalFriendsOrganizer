@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Threading.Tasks;
 
 namespace FriendOrganizer.UI.Data.Repositories
@@ -24,6 +25,11 @@ namespace FriendOrganizer.UI.Data.Repositories
         public async Task SaveAsync()
         {
             await Context.SaveChangesAsync();
+        }
+
+        public async Task<IEnumerable<TEntity>> GetAllAsync()
+        {
+            return await Context.Set<TEntity>().ToListAsync();
         }
 
         public bool HasChanges()
