@@ -119,15 +119,15 @@ namespace FriendOrganizer.UI.ViewModel
                    && HasChanges && PhoneNumbers.All(pn => !pn.HasErrors);
         }
 
-        public override async Task LoadAsync(int? friendId)
+        public override async Task LoadAsync(int friendId)
         {
-            var friend = friendId.HasValue
-                ? await _friendRepository.GetByIdAsync(friendId.Value)
+            var friend = friendId > 0
+                ? await _friendRepository.GetByIdAsync(friendId)
                     : CreateNewFriend()
                 ;
 
             // This Id is the id of DetailViewModel to work with tabs 
-            Id = friend.Id;
+            Id = friendId;
 
             InitializeFriend(friend);
             InitializeFrienPhoneNumbers(friend.PhoneNumbers);

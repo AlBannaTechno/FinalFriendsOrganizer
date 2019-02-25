@@ -36,7 +36,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         protected abstract void OnSaveExecute();
 
-        public abstract Task LoadAsync(int? id);
+        public abstract Task LoadAsync(int id);
 
         public string Title
         {

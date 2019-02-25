@@ -105,14 +105,14 @@ namespace FriendOrganizer.UI.ViewModel
             RaisDetailSavedEvent(Meeting.Id,Meeting.Title);
         }
 
-        public override async Task LoadAsync(int? meetingId)
+        public override async Task LoadAsync(int meetingId)
         {
-            var meeting = meetingId.HasValue
-                ? await _meetingRepository.GetByIdAsync(meetingId.Value)
+            var meeting = meetingId>0
+                ? await _meetingRepository.GetByIdAsync(meetingId)
                 : CreateNewMeeting();
 
             // Id Used with tabs
-            Id = meeting.Id;
+            Id = meetingId;
 
             InitializeMeeting(meeting);
 
