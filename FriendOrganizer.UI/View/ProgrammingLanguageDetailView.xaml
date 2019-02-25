@@ -11,7 +11,12 @@
 			<RowDefinition/>
 			<RowDefinition Height="Auto"/>
 		</Grid.RowDefinitions>
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition/>
+			<ColumnDefinition Width="Auto"/>
+		</Grid.ColumnDefinitions>
 		<DataGrid ItemsSource="{Binding ProgrammingLanguages}"
+							SelectedItem="{Binding SelectedProgrammingLanguage,Mode=TwoWay}"
 							AutoGenerateColumns="False"
 							RowHeaderWidth="0"
 							Margin="10"
@@ -25,8 +30,13 @@
 					/>
 			</DataGrid.Columns>
 		</DataGrid>
-		<StackPanel Grid.Row="1">
+		<StackPanel Grid.Column="0" Grid.Row="1">
 			<Button Content="Save" Command="{Binding SaveCommand}"/>
+		</StackPanel>
+
+		<StackPanel Grid.Column="1" Grid.Row="0" Margin="0 5 5 5">
+			<Button Content="Add" Margin="5" Width="125" Command="{Binding AddCommand}"/>
+			<Button Content="Remove" Margin="5" Width="125" Command="{Binding RemoveCommand}"/>
 		</StackPanel>
 	</Grid>
 </UserControl>
