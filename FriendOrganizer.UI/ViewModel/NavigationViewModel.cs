@@ -94,7 +94,7 @@ namespace FriendOrganizer.UI.ViewModel
             Meetings.Clear();
             foreach (LookupItem meeting in lookup)
             {
-                Friends.Add(new NavigationItemViewModel(meeting.Id, meeting.DisplayMember, _eventAggregator,
+                Meetings.Add(new NavigationItemViewModel(meeting.Id, meeting.DisplayMember, _eventAggregator,
                     nameof(MeetingDetailViewModel)
                 ));
             }
