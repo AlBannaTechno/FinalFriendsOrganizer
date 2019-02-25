@@ -12,6 +12,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         protected readonly IEventAggregator EventAggregator;
         private  int _id;
+        private string _title;
 
         protected DetailViewModelBase(IEventAggregator eventAggregator)
         {
@@ -28,6 +29,16 @@ namespace FriendOrganizer.UI.ViewModel
         protected abstract void OnSaveExecute();
 
         public abstract Task LoadAsync(int? id);
+
+        public string Title
+        {
+            get => _title;
+            set
+            {
+                _title = value;
+                OnPropertyChanged();
+            }
+        }
 
         public bool HasChanges
         {
