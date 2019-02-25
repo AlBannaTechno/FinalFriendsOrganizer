@@ -19,7 +19,12 @@ namespace FriendOrganizer.UI.ViewModel
             EventAggregator = eventAggregator;
             SaveCommand = new DelegateCommand(OnSaveExecute, OnSaveCanExecute);
             DeleteCommand = new DelegateCommand(OnDeleteExecute);
+            CloseDetailViewCommand=new DelegateCommand(OnCloseDetailViewExecute);
         }
+
+        
+
+        public ICommand CloseDetailViewCommand { get; }
 
         // means sub class must implement them
         protected abstract void OnDeleteExecute();
@@ -89,6 +94,11 @@ namespace FriendOrganizer.UI.ViewModel
                     DisplayMember = displayMember
                 }
             );
+        }
+
+        protected virtual void OnCloseDetailViewExecute()
+        {
+
         }
     }
 }
