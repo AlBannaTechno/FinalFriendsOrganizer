@@ -11,6 +11,7 @@ namespace FriendOrganizer.UI.ViewModel
         private bool _hasChanges;
 
         protected readonly IEventAggregator EventAggregator;
+        private  int _id;
 
         protected DetailViewModelBase(IEventAggregator eventAggregator)
         {
@@ -40,6 +41,14 @@ namespace FriendOrganizer.UI.ViewModel
                     ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
                 }
             }
+        }
+
+        // this id must set inside any class inherited from this class like : 
+        
+        public int Id
+        {
+            get => _id;
+            protected set => _id = value;
         }
 
         public ICommand SaveCommand { get; private set; }

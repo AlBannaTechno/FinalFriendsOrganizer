@@ -110,6 +110,7 @@ namespace FriendOrganizer.UI.ViewModel
         {
             await _friendRepository.SaveAsync();
             HasChanges = _friendRepository.HasChanges();
+            Id = Friend.Id;
             RaisDetailSavedEvent(Friend.Id, Friend.FirstName + " " + Friend.LastName);
         }
 
@@ -126,6 +127,10 @@ namespace FriendOrganizer.UI.ViewModel
                 ? await _friendRepository.GetByIdAsync(friendId.Value)
                     : CreateNewFriend()
                 ;
+
+            // This Id is the id of DetailViewModel to work with tabs 
+            Id = friend.Id;
+
             InitializeFriend(friend);
             InitializeFrienPhoneNumbers(friend.PhoneNumbers);
             await LoadProgrammingLanguagesLookupAsync();

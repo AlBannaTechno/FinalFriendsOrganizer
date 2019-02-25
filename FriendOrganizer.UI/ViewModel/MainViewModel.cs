@@ -3,6 +3,8 @@ using FriendOrganizer.UI.Services;
 using Prism.Commands;
 using Prism.Events;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Autofac.Features.Indexed;
@@ -11,7 +13,7 @@ namespace FriendOrganizer.UI.ViewModel
 {
     public class MainViewModel : ViewModelBase
     {
-        private IDetailViewModel _detailViewModel;
+        private IDetailViewModel _selectedDetailViewModel;
         private readonly IMessageDialogService _messageDialogService;
         private readonly IIndex<string, IDetailViewModel> _detailViewModelCreator;
 
@@ -19,13 +21,13 @@ namespace FriendOrganizer.UI.ViewModel
             
             IEventAggregator eventAggregator,
             IMessageDialogService messageDialogService,
-            IIndex<string,IDetailViewModel> detailViewModelCreator
-            )
+            IIndex<string,IDetailViewModel> detailViewModelCreator)
         {
             NavigationViewModel = navigationViewModel;
             var eventAggregator1 = eventAggregator;
             _messageDialogService = messageDialogService;
             _detailViewModelCreator = detailViewModelCreator;
+            DetailViewModels = new ObservableCollection<IDetailViewModel>();
             eventAggregator1.GetEvent<OpenDetailViewEvent>()
                 .Subscribe(OnOpenDetailView);
             eventAggregator1.GetEvent<AfterDetailDeletedEvent>()
@@ -37,7 +39,12 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void AfterDetailDeleted(AfterDetailDeletedEventArgs args)
         {
-            DetailViewModel = null;
+            var detailViewModel = DetailViewModels
+                .SingleOrDefault(vm => vm.Id == args.Id && vm.GetType().Name == args.ViewModelName);
+            if (detailViewModel!=null)
+            {
+                DetailViewModels.Remove(detailViewModel);
+            }
         }
 
         public async Task LoadAsync()
@@ -49,28 +56,32 @@ namespace FriendOrganizer.UI.ViewModel
 
         public INavigationViewModel NavigationViewModel { get; }
 
-        public IDetailViewModel DetailViewModel
+        public ObservableCollection<IDetailViewModel> DetailViewModels { get;}
+
+        public IDetailViewModel SelectedDetailViewModel
         {
-            get => _detailViewModel;
-            private set
+            get => _selectedDetailViewModel;
+            set
             {
-                _detailViewModel = value;
+                _selectedDetailViewModel = value;
                 OnPropertyChanged();
             }
         }
 
         private async void OnOpenDetailView(OpenDetailViewEventArgs args)
         {
-            if (DetailViewModel != null && DetailViewModel.HasChanges)
+            var detailViewModel = DetailViewModels
+                .SingleOrDefault(vm => vm.Id == args.Id && vm.GetType().Name == args.ViewModelName);
+
+            if (detailViewModel==null)
             {
-                var result = _messageDialogService.ShowOkCancelDialog("You Have Made changes ! Go AnyWay ?", "Changes Lose Warning");
-                if (result == MessageDialogResult.Cancel)
-                    return;
+                detailViewModel= _detailViewModelCreator[args.ViewModelName];
+                await detailViewModel.LoadAsync(args.Id);
+                DetailViewModels.Add(detailViewModel);
             }
 
-            DetailViewModel = _detailViewModelCreator[args.ViewModelName];
+            SelectedDetailViewModel = detailViewModel;
 
-            if (DetailViewModel != null) await DetailViewModel.LoadAsync(args.Id);
         }
 
         private void OnCreateNewDetailExecute(Type viewModelType)

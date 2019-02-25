@@ -100,6 +100,7 @@ namespace FriendOrganizer.UI.ViewModel
         {
             await _meetingRepository.SaveAsync();
             HasChanges = _meetingRepository.HasChanges();
+            Id = Meeting.Id;
             RaisDetailSavedEvent(Meeting.Id,Meeting.Title);
         }
 
@@ -108,6 +109,10 @@ namespace FriendOrganizer.UI.ViewModel
             var meeting = meetingId.HasValue
                 ? await _meetingRepository.GetByIdAsync(meetingId.Value)
                 : CreateNewMeeting();
+
+            // Id Used with tabs
+            Id = meeting.Id;
+
             InitializeMeeting(meeting);
 
             _allFriends=await _meetingRepository.GetAllFriendsAsync();
