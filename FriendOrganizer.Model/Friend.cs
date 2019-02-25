@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FriendOrganizer.Model
 {
@@ -7,8 +9,8 @@ namespace FriendOrganizer.Model
     {
         public Friend()
         {
-            PhoneNumbers = new List<FriendPhoneNumber>();
-            Meetings=new List<Meeting>();
+            PhoneNumbers = new Collection<FriendPhoneNumber>();
+            Meetings=new Collection<Meeting>();
         }
 
         public int Id { get; set; }
@@ -24,6 +26,7 @@ namespace FriendOrganizer.Model
         [EmailAddress]
         public string Email { get; set; }
 
+        [ForeignKey("FavoriteLanguage")]
         public int? FavoriteLanguageId { get; set; }
 
         public ProgrammingLanguage FavoriteLanguage { get; set; }
