@@ -40,10 +40,21 @@
 			Grid.Row="1"
 			Grid.Column="0"
 			DataContext="{Binding NavigationViewModel}" />
-		<ContentControl
+		<TabControl
 			Grid.Row="1"
 			Grid.Column="1"
-			Content="{Binding DetailViewModel}" />
+			ItemsSource="{Binding DetailViewModels}" 
+			SelectedItem="{Binding SelectedDetailViewModel,Mode=TwoWay}"
+			>
+			<TabControl.ItemTemplate>
+				<DataTemplate>
+					<StackPanel Orientation="Horizontal">
+						<TextBlock Text="Title"/>
+						<TextBlock Text="*" Visibility="{Binding HasChanges,Converter={StaticResource BooleanToVisibilityConverter}}"/>
+					</StackPanel>
+				</DataTemplate>
+			</TabControl.ItemTemplate>
+		</TabControl>
 
 	</Grid>
 </Window>
