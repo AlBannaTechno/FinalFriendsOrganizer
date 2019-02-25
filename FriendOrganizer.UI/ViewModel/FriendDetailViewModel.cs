@@ -20,17 +20,15 @@ namespace FriendOrganizer.UI.ViewModel
 
         private FriendWrapper _friend;
 
-        private readonly IMessageDialogService _messageDialogService;
 
         private readonly IProgrammingLanguageLookupDataService _programmingLanguageLookupDataService;
 
         public FriendDetailViewModel(IFriendRepository friendRrepository, IEventAggregator eventAggregator
             , IMessageDialogService messageDialogService,
             IProgrammingLanguageLookupDataService programmingLanguageLookupDataService)
-            : base(eventAggregator)
+            : base(eventAggregator,messageDialogService)
         {
             _friendRepository = friendRrepository;
-            _messageDialogService = messageDialogService;
             _programmingLanguageLookupDataService = programmingLanguageLookupDataService;
 
 
@@ -49,7 +47,7 @@ namespace FriendOrganizer.UI.ViewModel
 
         private void OnRemovePhoneNumberExecute()
         {
-            var result = _messageDialogService.ShowOkCancelDialog($"Are You Sure :Removing Phone Number : {SelectedPhoneNumber.Number}", "Phone Remove Warning");
+            var result = MessageDialogService.ShowOkCancelDialog($"Are You Sure :Removing Phone Number : {SelectedPhoneNumber.Number}", "Phone Remove Warning");
             if (result == MessageDialogResult.Ok)
             {
                 SelectedPhoneNumber.PropertyChanged -= FriendPhoneNumberWrapper_PropertyChanged;
@@ -92,11 +90,11 @@ namespace FriendOrganizer.UI.ViewModel
         {
             if (await _friendRepository.HasMeetingsAsync(Friend.Id))
             {
-                _messageDialogService.ShowInfoDialog($"Can't Remove {Friend.FirstName} {Friend.LastName} : This has at least one meeting!");
+                MessageDialogService.ShowInfoDialog($"Can't Remove {Friend.FirstName} {Friend.LastName} : This has at least one meeting!");
                 return;
             }
 
-            var result = _messageDialogService.ShowOkCancelDialog($"Are Your Sure delete Frien : {Friend.FirstName} {Friend.LastName} ?", "Delete Warning");
+            var result = MessageDialogService.ShowOkCancelDialog($"Are Your Sure delete Frien : {Friend.FirstName} {Friend.LastName} ?", "Delete Warning");
             if (result == MessageDialogResult.Ok)
             {
                 _friendRepository.Remove(Friend.Model);
