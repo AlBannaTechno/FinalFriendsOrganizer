@@ -8,6 +8,7 @@ using Prism.Events;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -109,7 +110,38 @@ namespace FriendOrganizer.UI.ViewModel
 
         protected override async void OnSaveExecute()
         {
-            await _friendRepository.SaveAsync();
+            try
+            {
+                await _friendRepository.SaveAsync();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                var databaseValues = ex.Entries.Single().GetDatabaseValues();
+                if (databaseValues==null)
+                {
+                    MessageDialogService.ShowInfoDialog("The Entity has been Deleted by another user");
+                    RaisDetailDeletedEvent(Id);
+                    return;
+                }
+                var result = MessageDialogService.ShowOkCancelDialog("The entity changed from another uses" +
+                                "Click Ok to save your version any way or Cancel to get the new value from Db","Warning");
+
+                if (result==MessageDialogResult.Ok)
+                {
+                    // TODO : Need to undetstand next lines : how we save data to the database here !???
+                    // Update the original value with database value [save this value to database] => Client Wins
+                    var entity = ex.Entries.Single(); // current entity
+                    // set current entity values to values from database
+                    entity.OriginalValues.SetValues(entity.GetDatabaseValues());
+                    await _friendRepository.SaveAsync();
+                }
+                else
+                {
+                    // Reload entity from database
+                    await ex.Entries.Single().ReloadAsync();
+                    await LoadAsync(Friend.Id);
+                }
+            }
             HasChanges = _friendRepository.HasChanges();
             Id = Friend.Id;
             RaisDetailSavedEvent(Friend.Id, Friend.FirstName + " " + Friend.LastName);
