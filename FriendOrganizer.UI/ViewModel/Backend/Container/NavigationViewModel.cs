@@ -4,10 +4,11 @@ using System.Threading.Tasks;
 using FriendOrganizer.Model.SemiModel;
 using FriendOrganizer.UI.Data.Lookups.Shared;
 using FriendOrganizer.UI.Event.Shared;
-using FriendOrganizer.UI.ViewModel.Helper;
+using FriendOrganizer.UI.ViewModel.Backend.Represent;
+using FriendOrganizer.UI.ViewModel.Core;
 using Prism.Events;
 
-namespace FriendOrganizer.UI.ViewModel.Core
+namespace FriendOrganizer.UI.ViewModel.Backend.Container
 {
     public class NavigationViewModel : ViewModelBase, INavigationViewModel
     {

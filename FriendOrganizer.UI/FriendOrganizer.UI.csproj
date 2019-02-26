@@ -95,38 +95,38 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Data\Lookups\IFriendLookupDataService.cs" />
-    <Compile Include="Data\Lookups\IMeetingLookupDataService.cs" />
-    <Compile Include="Data\Lookups\IProgrammingLanguageLookupDataService.cs" />
-    <Compile Include="Data\Lookups\LookupDataService.cs" />
-    <Compile Include="Data\Repositories\GenericRepository.cs" />
-    <Compile Include="Data\Repositories\IGenericRepository.cs" />
-    <Compile Include="Data\Repositories\IMeetingRepository.cs" />
-    <Compile Include="Data\Repositories\IProgrammingLanguageRepository.cs" />
-    <Compile Include="Data\Repositories\MeetingRepository.cs" />
-    <Compile Include="Data\Repositories\ProgrammingLanguageRepository.cs" />
-    <Compile Include="Event\AfterCollectionSavedEvent.cs" />
-    <Compile Include="Event\AfterDetailClosedEvent.cs" />
-    <Compile Include="Event\AfterDetailDeletedEvent.cs" />
-    <Compile Include="Event\AfterDetailSavedEvent.cs" />
-    <Compile Include="Event\OpenDetailViewEvent.cs" />
+    <Compile Include="Data\Lookups\Shared\IFriendLookupDataService.cs" />
+    <Compile Include="Data\Lookups\Shared\IMeetingLookupDataService.cs" />
+    <Compile Include="Data\Lookups\Shared\IProgrammingLanguageLookupDataService.cs" />
+    <Compile Include="Data\Lookups\Core\LookupDataService.cs" />
+    <Compile Include="Data\Repositories\Core\GenericRepository.cs" />
+    <Compile Include="Data\Repositories\Core\IGenericRepository.cs" />
+    <Compile Include="Data\Repositories\Shared\IMeetingRepository.cs" />
+    <Compile Include="Data\Repositories\Shared\IProgrammingLanguageRepository.cs" />
+    <Compile Include="Data\Repositories\Shared\MeetingRepository.cs" />
+    <Compile Include="Data\Repositories\Shared\ProgrammingLanguageRepository.cs" />
+    <Compile Include="Event\Shared\AfterCollectionSavedEvent.cs" />
+    <Compile Include="Event\Shared\AfterDetailClosedEvent.cs" />
+    <Compile Include="Event\Shared\AfterDetailDeletedEvent.cs" />
+    <Compile Include="Event\Shared\AfterDetailSavedEvent.cs" />
+    <Compile Include="Event\Shared\OpenDetailViewEvent.cs" />
     <Compile Include="Properties\Annotations.cs" />
-    <Compile Include="Services\IMessageDialogService.cs" />
-    <Compile Include="Services\MessageDialogService.cs" />
+    <Compile Include="Services\Shared\IMessageDialogService.cs" />
+    <Compile Include="Services\Shared\MessageDialogService.cs" />
     <Compile Include="Startup\BootStrapper.cs" />
-    <Compile Include="ViewModel\DetailViewModelBase.cs" />
-    <Compile Include="ViewModel\FriendDetailViewModel.cs" />
-    <Compile Include="ViewModel\Helper\NavigationItemViewModel.cs" />
-    <Compile Include="ViewModel\IDetailViewModel.cs" />
-    <Compile Include="ViewModel\IFriendDetailViewModel.cs" />
-    <Compile Include="ViewModel\IMeetingDetailViewModel.cs" />
-    <Compile Include="ViewModel\INavigationViewModel.cs" />
-    <Compile Include="ViewModel\IProgrammingLanguagedDetailViewModel.cs" />
-    <Compile Include="ViewModel\MainViewModel.cs" />
-    <Compile Include="ViewModel\MeetingDetailViewModel.cs" />
-    <Compile Include="ViewModel\NavigationViewModel.cs" />
-    <Compile Include="ViewModel\ProgrammingLanguagedDetailViewModel.cs" />
-    <Compile Include="ViewModel\ViewModelBase.cs" />
+    <Compile Include="ViewModel\Core\DetailViewModelBase.cs" />
+    <Compile Include="ViewModel\Backend\Represent\FriendDetailViewModel.cs" />
+    <Compile Include="ViewModel\Core\NavigationItemViewModel.cs" />
+    <Compile Include="ViewModel\Core\IDetailViewModel.cs" />
+    <Compile Include="ViewModel\Backend\Represent\IFriendDetailViewModel.cs" />
+    <Compile Include="ViewModel\Backend\Represent\IMeetingDetailViewModel.cs" />
+    <Compile Include="ViewModel\Core\INavigationViewModel.cs" />
+    <Compile Include="ViewModel\Backend\Represent\IProgrammingLanguagedDetailViewModel.cs" />
+    <Compile Include="ViewModel\Core\MainViewModel.cs" />
+    <Compile Include="ViewModel\Backend\Represent\MeetingDetailViewModel.cs" />
+    <Compile Include="ViewModel\Backend\Container\NavigationViewModel.cs" />
+    <Compile Include="ViewModel\Backend\Represent\ProgrammingLanguagedDetailViewModel.cs" />
+    <Compile Include="ViewModel\Core\ViewModelBase.cs" />
     <Compile Include="View\FriendDetailView.xaml.cs">
       <DependentUpon>FriendDetailView.xaml</DependentUpon>
     </Compile>
@@ -139,12 +139,12 @@
     <Compile Include="View\ProgrammingLanguageDetailView.xaml.cs">
       <DependentUpon>ProgrammingLanguageDetailView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Wrapper\FriendPhoneNumberWrapper.cs" />
-    <Compile Include="Wrapper\FriendWrapper.cs" />
-    <Compile Include="Wrapper\MeetingWrapper.cs" />
-    <Compile Include="Wrapper\ModelWrapper.cs" />
-    <Compile Include="Wrapper\NotifyDataErrorInfoBase.cs" />
-    <Compile Include="Wrapper\ProgrammingLanguageWrapper.cs" />
+    <Compile Include="Wrapper\Shared\FriendPhoneNumberWrapper.cs" />
+    <Compile Include="Wrapper\Shared\FriendWrapper.cs" />
+    <Compile Include="Wrapper\Shared\MeetingWrapper.cs" />
+    <Compile Include="Wrapper\Core\ModelWrapper.cs" />
+    <Compile Include="Wrapper\Core\NotifyDataErrorInfoBase.cs" />
+    <Compile Include="Wrapper\Shared\ProgrammingLanguageWrapper.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -153,8 +153,8 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Data\Repositories\FriendRepository.cs" />
-    <Compile Include="Data\Repositories\IFriendRepository.cs" />
+    <Compile Include="Data\Repositories\Shared\FriendRepository.cs" />
+    <Compile Include="Data\Repositories\Shared\IFriendRepository.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -215,6 +215,9 @@
       <Name>FriendOrganizer.Model</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Event\Core\" />
+    <Folder Include="Services\Core\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

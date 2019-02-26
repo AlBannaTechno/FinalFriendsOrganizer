@@ -1,22 +1,22 @@
-﻿using FriendOrganizer.Model;
-using FriendOrganizer.UI.Data.Lookups;
-using FriendOrganizer.UI.Data.Repositories;
-using FriendOrganizer.UI.Services;
-using FriendOrganizer.UI.Wrapper;
-using Prism.Commands;
-using Prism.Events;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FriendOrganizer.Model.Model;
 using FriendOrganizer.Model.SemiModel;
-using FriendOrganizer.UI.Event;
+using FriendOrganizer.UI.Data.Lookups.Shared;
+using FriendOrganizer.UI.Data.Repositories.Shared;
+using FriendOrganizer.UI.Event.Shared;
+using FriendOrganizer.UI.Services.Shared;
+using FriendOrganizer.UI.ViewModel.Core;
+using FriendOrganizer.UI.Wrapper;
+using FriendOrganizer.UI.Wrapper.Shared;
+using Prism.Commands;
+using Prism.Events;
 
-namespace FriendOrganizer.UI.ViewModel
+namespace FriendOrganizer.UI.ViewModel.Backend.Represent
 {
     class FriendDetailViewModel : DetailViewModelBase, IFriendDetailViewModel
     {

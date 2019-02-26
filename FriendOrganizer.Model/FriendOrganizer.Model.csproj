@@ -43,18 +43,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Friend.cs" />
-    <Compile Include="FriendPhoneNumber.cs" />
-    <Compile Include="Model\LookupItem.cs" />
-    <Compile Include="Meeting.cs" />
-    <Compile Include="ProgrammingLanguage.cs" />
+    <Compile Include="Model\Friend.cs" />
+    <Compile Include="Model\FriendPhoneNumber.cs" />
+    <Compile Include="SemiModel\LookupItem.cs" />
+    <Compile Include="Model\Meeting.cs" />
+    <Compile Include="Model\ProgrammingLanguage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Model.md" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="SemiModel\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

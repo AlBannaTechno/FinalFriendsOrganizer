@@ -1,8 +1,8 @@
-﻿using FriendOrganizer.UI.Annotations;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using FriendOrganizer.UI.Annotations;
 
-namespace FriendOrganizer.UI.ViewModel
+namespace FriendOrganizer.UI.ViewModel.Core
 {
     public class ViewModelBase : INotifyPropertyChanged
     {

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using FriendOrganizer.DataAccess;
 using FriendOrganizer.Model.SemiModel;
+using FriendOrganizer.UI.Data.Lookups.Shared;
 
 namespace FriendOrganizer.UI.Data.Lookups.Core
 {

@@ -1,5 +1,6 @@
 ﻿using FriendOrganizer.UI.ViewModel;
 using System.Windows;
+using FriendOrganizer.UI.ViewModel.Core;
 using MahApps.Metro.Controls;
 
 namespace FriendOrganizer.UI

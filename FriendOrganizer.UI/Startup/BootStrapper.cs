@@ -1,9 +1,14 @@
 ﻿using Autofac;
 using FriendOrganizer.DataAccess;
 using FriendOrganizer.UI.Data.Lookups;
+using FriendOrganizer.UI.Data.Lookups.Core;
 using FriendOrganizer.UI.Data.Repositories;
-using FriendOrganizer.UI.Services;
+using FriendOrganizer.UI.Data.Repositories.Shared;
+using FriendOrganizer.UI.Services.Shared;
 using FriendOrganizer.UI.ViewModel;
+using FriendOrganizer.UI.ViewModel.Backend.Container;
+using FriendOrganizer.UI.ViewModel.Backend.Represent;
+using FriendOrganizer.UI.ViewModel.Core;
 using Prism.Events;
 
 namespace FriendOrganizer.UI.Startup

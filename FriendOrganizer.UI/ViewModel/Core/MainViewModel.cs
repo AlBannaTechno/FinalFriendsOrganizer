@@ -1,15 +1,15 @@
-﻿using FriendOrganizer.UI.Event;
-using FriendOrganizer.UI.Services;
-using Prism.Commands;
-using Prism.Events;
-using System;
+﻿using System;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Autofac.Features.Indexed;
+using FriendOrganizer.UI.Event.Shared;
+using FriendOrganizer.UI.Services.Shared;
+using Prism.Commands;
+using Prism.Events;
 
-namespace FriendOrganizer.UI.ViewModel
+namespace FriendOrganizer.UI.ViewModel.Core
 {
     public class MainViewModel : ViewModelBase
     {

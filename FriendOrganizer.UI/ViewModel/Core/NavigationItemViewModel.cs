@@ -1,9 +1,9 @@
-﻿using FriendOrganizer.UI.Event;
+﻿using System.Windows.Input;
+using FriendOrganizer.UI.Event.Shared;
 using Prism.Commands;
 using Prism.Events;
-using System.Windows.Input;
 
-namespace FriendOrganizer.UI.ViewModel.Helper
+namespace FriendOrganizer.UI.ViewModel.Core
 {
     /*
      * This is just a helper class to implement iNotifyPropertyChanged instead of implement it
