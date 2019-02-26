@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FriendOrganizer.Model;
+using FriendOrganizer.Model.Model;
 
 namespace FriendOrganizer.DataAccess.Migrations
 {

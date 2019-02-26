@@ -4,6 +4,7 @@ using FriendOrganizer.DataAccess;
 using FriendOrganizer.Model;
 using System.Data.Entity;
 using System.Linq;
+using FriendOrganizer.Model.Model;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {

@@ -45,10 +45,16 @@
   <ItemGroup>
     <Compile Include="Friend.cs" />
     <Compile Include="FriendPhoneNumber.cs" />
-    <Compile Include="LookupItem.cs" />
+    <Compile Include="Model\LookupItem.cs" />
     <Compile Include="Meeting.cs" />
     <Compile Include="ProgrammingLanguage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Model.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SemiModel\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

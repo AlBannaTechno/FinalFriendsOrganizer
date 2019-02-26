@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using FriendOrganizer.DataAccess;
 using FriendOrganizer.Model;
+using FriendOrganizer.Model.Model;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {

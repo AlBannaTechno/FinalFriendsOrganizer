@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FriendOrganizer.Model;
+using FriendOrganizer.Model.Model;
 
 namespace FriendOrganizer.UI.Wrapper
 {

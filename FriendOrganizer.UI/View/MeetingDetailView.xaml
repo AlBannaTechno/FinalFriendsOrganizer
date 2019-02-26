@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:FriendOrganizer.UI.View"
              xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
 						 xmlns:model="clr-namespace:FriendOrganizer.Model;assembly=FriendOrganizer.Model"
+						 xmlns:model1="clr-namespace:FriendOrganizer.Model.Model;assembly=FriendOrganizer.Model"
 						 mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
 	<Grid>
@@ -31,7 +32,7 @@
 			<Grid Grid.Row="6" Margin="10">
 
 				<Grid.Resources>
-					<DataTemplate DataType="{x:Type model:Friend}">
+					<DataTemplate DataType="{x:Type model1:Friend}">
 						<TextBlock>
 							<Run Text="{Binding FirstName}"/>
 							<Run Text="{Binding LastName}"/>

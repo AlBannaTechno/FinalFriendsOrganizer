@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using FriendOrganizer.Model;
+using FriendOrganizer.Model.Model;
 using FriendOrganizer.UI.Data.Repositories;
 using FriendOrganizer.UI.Services;
 using FriendOrganizer.UI.Wrapper;

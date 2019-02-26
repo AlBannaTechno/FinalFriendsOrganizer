@@ -3,6 +3,7 @@ using FriendOrganizer.Model;
 using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
+using FriendOrganizer.Model.Model;
 
 namespace FriendOrganizer.UI.Data.Repositories
 {

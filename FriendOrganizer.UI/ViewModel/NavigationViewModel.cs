@@ -6,6 +6,7 @@ using Prism.Events;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using FriendOrganizer.Model.SemiModel;
 
 namespace FriendOrganizer.UI.ViewModel
 {

@@ -12,6 +12,8 @@ using System.Data.Entity.Infrastructure;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using FriendOrganizer.Model.Model;
+using FriendOrganizer.Model.SemiModel;
 using FriendOrganizer.UI.Event;
 
 namespace FriendOrganizer.UI.ViewModel

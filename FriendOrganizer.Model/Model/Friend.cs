@@ -9,6 +9,9 @@ namespace FriendOrganizer.Model.Model
     {
         public Friend()
         {
+            /**
+             * Initialize any Collection to prevent any run time exception
+             */
             PhoneNumbers = new Collection<FriendPhoneNumber>();
             Meetings=new Collection<Meeting>();
         }
@@ -29,6 +32,18 @@ namespace FriendOrganizer.Model.Model
         [ForeignKey("FavoriteLanguage")]
         public int? FavoriteLanguageId { get; set; }
 
+        /**
+         * This [Timestamp] attribute wiil make entity track changes from database before submit any changes
+         * This created to support multi-user scenario
+         * This must used with a validation on DbUpdateConcurrencyException
+         *
+         * We impelement this in : FriendOrganizer.UI.DetailViewModelBase.SaveWithOptimisticConcurrencyAsync()
+         *
+         * we have two type
+         *  1- Optimistic Concurrency : Client Win  :   so client can ovveride database changes
+         *  2- Pesimistic Concurrency : Db Win      :   so client will retrieve the value from db and update it's[Client] entity
+         *  SaveWithOptimisticConcurrencyAsync() : Support two scenarios
+         */
         [Timestamp]
         public byte[] RowVersion { get; set; }
 

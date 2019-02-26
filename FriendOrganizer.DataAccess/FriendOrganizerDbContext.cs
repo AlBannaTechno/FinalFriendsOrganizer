@@ -1,6 +1,7 @@
 ﻿using FriendOrganizer.Model;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using FriendOrganizer.Model.Model;
 
 /**
  * In This File We Create FriendOrganizerDbContext To Contian FriendOrganizer Application entities
