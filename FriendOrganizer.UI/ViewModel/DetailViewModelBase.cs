@@ -112,12 +112,12 @@ namespace FriendOrganizer.UI.ViewModel
             );
         }
 
-        protected virtual void OnCloseDetailViewExecute()
+        protected virtual async void OnCloseDetailViewExecute()
         {
             if (HasChanges)
             {
                 var result =
-                    MessageDialogService.ShowOkCancelDialog("You've made changes . Close this item ?", "Question");
+                    await MessageDialogService.ShowOkCancelDialogAsync("You've made changes . Close this item ?", "Question");
                 if (result==MessageDialogResult.Cancel)
                 {
                     return;
@@ -142,11 +142,11 @@ namespace FriendOrganizer.UI.ViewModel
                 var databaseValues = ex.Entries.Single().GetDatabaseValues();
                 if (databaseValues == null)
                 {
-                    MessageDialogService.ShowInfoDialog("The Entity has been Deleted by another user");
+                    await MessageDialogService.ShowInfoDialogAsync("The Entity has been Deleted by another user");
                     RaisDetailDeletedEvent(Id);
                     return;
                 }
-                var result = MessageDialogService.ShowOkCancelDialog("The entity changed from another uses" +
+                var result = await MessageDialogService.ShowOkCancelDialogAsync("The entity changed from another uses" +
                                                                      "Click Ok to save your version any way or Cancel to get the new value from Db", "Warning");
 
                 if (result == MessageDialogResult.Ok)

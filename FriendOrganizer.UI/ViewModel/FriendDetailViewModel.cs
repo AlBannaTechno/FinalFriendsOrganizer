@@ -49,9 +49,9 @@ namespace FriendOrganizer.UI.ViewModel
             return SelectedPhoneNumber != null;
         }
 
-        private void OnRemovePhoneNumberExecute()
+        private async void OnRemovePhoneNumberExecute()
         {
-            var result = MessageDialogService.ShowOkCancelDialog($"Are You Sure :Removing Phone Number : {SelectedPhoneNumber.Number}", "Phone Remove Warning");
+            var result = await MessageDialogService.ShowOkCancelDialogAsync($"Are You Sure :Removing Phone Number : {SelectedPhoneNumber.Number}", "Phone Remove Warning");
             if (result == MessageDialogResult.Ok)
             {
                 SelectedPhoneNumber.PropertyChanged -= FriendPhoneNumberWrapper_PropertyChanged;
@@ -94,11 +94,11 @@ namespace FriendOrganizer.UI.ViewModel
         {
             if (await _friendRepository.HasMeetingsAsync(Friend.Id))
             {
-                MessageDialogService.ShowInfoDialog($"Can't Remove {Friend.FirstName} {Friend.LastName} : This has at least one meeting!");
+                await MessageDialogService.ShowInfoDialogAsync($"Can't Remove {Friend.FirstName} {Friend.LastName} : This has at least one meeting!");
                 return;
             }
 
-            var result = MessageDialogService.ShowOkCancelDialog($"Are Your Sure delete Frien : {Friend.FirstName} {Friend.LastName} ?", "Delete Warning");
+            var result = await MessageDialogService.ShowOkCancelDialogAsync($"Are Your Sure delete Frien : {Friend.FirstName} {Friend.LastName} ?", "Delete Warning");
             if (result == MessageDialogResult.Ok)
             {
                 _friendRepository.Remove(Friend.Model);

@@ -110,7 +110,7 @@ namespace FriendOrganizer.UI.ViewModel
                 await _programmingLanguageRepository.IsReferencedByFriendAsync(SelectedProgrammingLanguage.Id);
             if (isReferenced)
             {
-                MessageDialogService.ShowInfoDialog($"You can't remove this language : {SelectedProgrammingLanguage.Name} it's referenced by at least one friend");
+                await MessageDialogService.ShowInfoDialogAsync($"You can't remove this language : {SelectedProgrammingLanguage.Name} it's referenced by at least one friend");
                 return;
             }
 
