@@ -58,7 +58,8 @@ namespace FriendOrganizer.UI.Wrapper.Core
 
         /**
          * Set a Value to the model by propertyName and property type with reflection
-         * Because we here set a new value we need to          *  1- call OnPropertyChanged() to event all subscribbers
+         * Because we here set a new value we need to 
+         *  1- call OnPropertyChanged() to event all subscribbers
          *  2- Validate this property after the chaging
          */
         protected virtual void SetValue<TValue>(TValue value, [CallerMemberName]string propertyName = null)
