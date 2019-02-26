@@ -9,17 +9,17 @@ namespace FriendOrganizer.UI.Wrapper
 {
     public class NotifyDataErrorInfoBase : ViewModelBase, INotifyDataErrorInfo
     {
-        private readonly Dictionary<string, List<string>> _errorsBtPropertyName =
+        private readonly Dictionary<string, List<string>> _errorsByPropertyName =
             new Dictionary<string, List<string>>();
 
         public IEnumerable GetErrors(string propertyName)
         {
-            return _errorsBtPropertyName.ContainsKey(propertyName) ?
-                _errorsBtPropertyName[propertyName] :
+            return _errorsByPropertyName.ContainsKey(propertyName) ?
+                _errorsByPropertyName[propertyName] :
                 null;
         }
 
-        public bool HasErrors => _errorsBtPropertyName.Any();
+        public bool HasErrors => _errorsByPropertyName.Any();
 
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
 
@@ -33,23 +33,23 @@ namespace FriendOrganizer.UI.Wrapper
 
         protected void AddError(string propertyName, string error)
         {
-            if (!_errorsBtPropertyName.ContainsKey(propertyName))
+            if (!_errorsByPropertyName.ContainsKey(propertyName))
             {
-                _errorsBtPropertyName[propertyName] = new List<string>();
+                _errorsByPropertyName[propertyName] = new List<string>();
             }
 
-            if (!_errorsBtPropertyName[propertyName].Contains(error))
+            if (!_errorsByPropertyName[propertyName].Contains(error))
             {
-                _errorsBtPropertyName[propertyName].Add(error);
+                _errorsByPropertyName[propertyName].Add(error);
                 OnErrorsChanged(propertyName);
             }
         }
 
         protected void ClearError(string propertyName)
         {
-            if (_errorsBtPropertyName.ContainsKey(propertyName))
+            if (_errorsByPropertyName.ContainsKey(propertyName))
             {
-                _errorsBtPropertyName.Remove(propertyName);
+                _errorsByPropertyName.Remove(propertyName);
                 OnErrorsChanged(propertyName);
             }
         }
