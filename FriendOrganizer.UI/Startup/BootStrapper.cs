@@ -13,6 +13,15 @@ using Prism.Events;
 
 namespace FriendOrganizer.UI.Startup
 {
+    /**
+     * This class is the Bootstrapper for this project and use dependency injection to supply/register all classes
+     *  and interfaces
+     * And we use autofac library to do that
+     * we must use this class to just retrieve the first initialized instance for this project
+     *  then all other sub/internal instances will retrieved automaticaly
+     *  => this instance is the mainWindow and located at App.xaml.cs : App_OnStartup event handler
+     *  => this event handler we specifiy it inside App.xaml : Startup="App_OnStartup"
+     */
     public class BootStrapper
     {
         public IContainer Bootstrap()
