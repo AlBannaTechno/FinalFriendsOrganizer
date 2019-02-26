@@ -142,10 +142,11 @@ namespace FriendOrganizer.UI.Wrapper.Core
          *
          * Notic we use yield because we use IEnumerable and this will work perfectly with asyn to
          * make a performance better because IEnumerable don't fetch all data at once but one by one
+         * Also Note : when IEnumerable don't yield any thing this means it's will return null and this is OK
          */
         protected virtual IEnumerable<string> ValidateProperty(string propertyName)
         {
-            // This method must ovverided in the subClass : so we put it protected virtual
+            // This method should ovverided in the subClass : so we put it protected virtual
             return null;
         }
     }
