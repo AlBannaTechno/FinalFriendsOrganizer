@@ -5,21 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:FriendOrganizer.UI"
         xmlns:view="clr-namespace:FriendOrganizer.UI.View"
-        xmlns:viewModel="clr-namespace:FriendOrganizer.UI.ViewModel"
         xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
-        xmlns:represent="clr-namespace:FriendOrganizer.UI.ViewModel.Backend.Represent"
+        xmlns:viewModelRepresent="clr-namespace:FriendOrganizer.UI.ViewModel.Backend.Represent"
         mc:Ignorable="d"
         Title="FriendOrganizer" Height="700" Width="1000" FontSize="20"
         WindowStartupLocation="CenterScreen"
         Topmost="False">
 	<Window.Resources>
-		<DataTemplate DataType="{x:Type represent:FriendDetailViewModel}">
+		<DataTemplate DataType="{x:Type viewModelRepresent:FriendDetailViewModel}">
 			<view:FriendDetailView />
 		</DataTemplate>
-		<DataTemplate DataType="{x:Type represent:MeetingDetailViewModel}">
+		<DataTemplate DataType="{x:Type viewModelRepresent:MeetingDetailViewModel}">
 			<view:MeetingDetailView />
 		</DataTemplate>
-		<DataTemplate DataType="{x:Type represent:ProgrammingLanguagedDetailViewModel}">
+		<DataTemplate DataType="{x:Type viewModelRepresent:ProgrammingLanguagedDetailViewModel}">
 			<view:ProgrammingLanguageDetailView />
 		</DataTemplate>
 	</Window.Resources>
@@ -35,14 +34,14 @@
 		<Menu Grid.ColumnSpan="2">
 			<MenuItem Header="Create">
 				<MenuItem Header="New Friend" Command="{Binding CreateNewDetailCommand}"
-				          CommandParameter="{x:Type represent:FriendDetailViewModel}" />
+				          CommandParameter="{x:Type viewModelRepresent:FriendDetailViewModel}" />
 
 				<MenuItem Header="New Meeting" Command="{Binding CreateNewDetailCommand}"
-				          CommandParameter="{x:Type represent:MeetingDetailViewModel}" />
+				          CommandParameter="{x:Type viewModelRepresent:MeetingDetailViewModel}" />
 			</MenuItem>
 			<MenuItem Header="Edit">
 				<MenuItem Header="Programming Languages" Command="{Binding OpenSingleDetailViewCommand}"
-				          CommandParameter="{x:Type represent:ProgrammingLanguagedDetailViewModel}"
+				          CommandParameter="{x:Type viewModelRepresent:ProgrammingLanguagedDetailViewModel}"
 				/>
 			</MenuItem>
 		</Menu>
