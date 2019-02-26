@@ -6,6 +6,18 @@
              DispatcherUnhandledException="App_OnDispatcherUnhandledException">
 	<Application.Resources>
 
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+		<ResourceDictionary>
+			<ResourceDictionary.MergedDictionaries>
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+				<ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Themes/Light.Teal.xaml" />
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+
+		<ResourceDictionary>
+			
 		<BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
 
 		<Style TargetType="{x:Type TextBox}">
@@ -64,5 +76,9 @@
 			</Style.Triggers>
 		</Style>
 		<!-- https://stackoverflow.com/questions/666269/styling-nested-elements-in-wpf -->
+		</ResourceDictionary>
+			</ResourceDictionary.MergedDictionaries>
+		</ResourceDictionary>
+
 	</Application.Resources>
 </Application>
