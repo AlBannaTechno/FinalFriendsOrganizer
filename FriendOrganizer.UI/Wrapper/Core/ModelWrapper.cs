@@ -31,6 +31,10 @@ namespace FriendOrganizer.UI.Wrapper.Core
     {
         /**
          * The Main Constructor with Generic T as an argument represent the model
+         *
+         * Note : protected constructor mean this constructor/class only can use as a base class for it'schild
+         *          not with new keyword : this will prevent call this constructor with new keyword even if
+         *          we remove abstraction from this class
          */
         protected ModelWrapper(T model)
         {
