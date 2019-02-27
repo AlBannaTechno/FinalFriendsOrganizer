@@ -10,6 +10,14 @@ using Prism.Events;
 
 namespace FriendOrganizer.UI.ViewModel.Core
 {
+    /**
+     * This class created to be a base class for all classes that represent detailView
+     * This class should have next Features
+     *  Support Saving changes
+     *  Support Delete entites
+     *  Support Close DetailView or rais an event to do that
+     *  
+     */
     public abstract class DetailViewModelBase : ViewModelBase, IDetailViewModel
     {
         private bool _hasChanges;
@@ -17,6 +25,10 @@ namespace FriendOrganizer.UI.ViewModel.Core
         protected readonly IEventAggregator EventAggregator;
         protected readonly IMessageDialogService MessageDialogService;
         private  int _id;
+
+        /*
+         * This tilte may used to show in tab header
+         */
         private string _title;
 
         protected DetailViewModelBase(IEventAggregator eventAggregator,IMessageDialogService messageDialogService)
@@ -28,11 +40,11 @@ namespace FriendOrganizer.UI.ViewModel.Core
             CloseDetailViewCommand=new DelegateCommand(OnCloseDetailViewExecute);
         }
 
-        
 
         public ICommand CloseDetailViewCommand { get; }
 
-        // means sub class must implement them
+        #region Abstracts Methods
+
         protected abstract void OnDeleteExecute();
 
         protected abstract bool OnSaveCanExecute();
@@ -40,6 +52,9 @@ namespace FriendOrganizer.UI.ViewModel.Core
         protected abstract void OnSaveExecute();
 
         public abstract Task LoadAsync(int id);
+
+        #endregion
+
 
         public string Title
         {
@@ -78,6 +93,10 @@ namespace FriendOrganizer.UI.ViewModel.Core
         public ICommand DeleteCommand { get; private set; }
 
 
+        /**
+         *  TODO : DOCs
+         *
+         */
         protected virtual void RaisCollectionSavedEvent()
         {
             EventAggregator.GetEvent<AfterCollectionSavedEvent>().Publish(new AfterCollectionSavedEventArgs()
@@ -86,6 +105,13 @@ namespace FriendOrganizer.UI.ViewModel.Core
             });
         }
 
+        /**
+         * This function must called from implementaion of OnDeleteExecute()
+         * Also we should subscribe to AfterDetailDeletedEvent : at [MainViewModel]
+         *  Or any place will Contains The View Or the collection which contains the view
+         *      Which it's backend [DataContext] inherited from this class : DetailViewModelBase
+         *  Like : [ProgrammingLanguagedDetailViewModel,FriendDetailViewModel,MeetingDetailViewModel] 
+         */
         protected virtual void RaisDetailDeletedEvent(int modelId)
         {
             EventAggregator.GetEvent<AfterDetailDeletedEvent>().Publish(
@@ -98,6 +124,16 @@ namespace FriendOrganizer.UI.ViewModel.Core
                 );
         }
 
+        /**
+         * This function must called from implementaion of OnSaveExecute()
+         * AfterDetailSavedEvent : should subscribed from any ViewModel one or more of it's fields
+         * depending on values from DetailViewModelBase childs/subClasses
+         *  and this like NavigationViewModel : which has Friends/Meetings collections of NavigationItemViewModel
+         *  which get it's values from Lookupitem fetched entites from Db and view it with DisplayMember property
+         *  So this property may chaged if we change values of entity/[Db-model instance]
+         *   for that NavigationViewModel must subscribe to AfterDetailSavedEvent
+         * 
+         */
         protected virtual void RaisDetailSavedEvent(int modelId, string displayMember)
         {
             EventAggregator.GetEvent<AfterDetailSavedEvent>().Publish(
@@ -111,6 +147,9 @@ namespace FriendOrganizer.UI.ViewModel.Core
             );
         }
 
+        /**
+         * To Execute When CloseDetailViewCommand executed
+         */
         protected virtual async void OnCloseDetailViewExecute()
         {
             if (HasChanges)
@@ -123,6 +162,14 @@ namespace FriendOrganizer.UI.ViewModel.Core
                 }
             }
 
+            /**
+             * publish AfterDetailClosedEvent
+             * This evetn should subscribed from The ViewModel which contain the instance of the class implemented
+             *      this class => DetailViewModelBase , or continers containe the instance ........||...
+             *  Like : [ProgrammingLanguagedDetailViewModel,FriendDetailViewModel,MeetingDetailViewModel]
+             *
+             * And That class is like MainViewModel
+             */
             EventAggregator.GetEvent<AfterDetailClosedEvent>().Publish(new AfterDetailClosedEventArgs()
             {
                 Id = this.Id,
@@ -130,7 +177,13 @@ namespace FriendOrganizer.UI.ViewModel.Core
             });
         }
 
-        protected  async Task SaveWithOptimisticConcurrencyAsync(Func<Task> saveFunc,Action afterSaveAction)
+        /**
+         * This method designed to call from the subClass with pass saveFunc as save function
+         *  contains the logic of saving for this custom subClass
+         * And afterSaveAction : to do some stuff like update HasChanges
+         *  and invoke RaisDetailSavedEvent()
+         */
+        protected async Task SaveWithOptimisticConcurrencyAsync(Func<Task> saveFunc,Action afterSaveAction)
         {
             try
             {
