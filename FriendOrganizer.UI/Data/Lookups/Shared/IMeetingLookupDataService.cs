@@ -6,6 +6,6 @@ namespace FriendOrganizer.UI.Data.Lookups.Shared
 {
     public interface IMeetingLookupDataService
     {
-        Task<List<LookupItem>> GetMeetingLookupSync();
+        Task<IEnumerable<LookupItem>> GetMeetingLookupSync();
     }
 }

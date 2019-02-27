@@ -9,6 +9,22 @@ using FriendOrganizer.UI.Data.Lookups.Shared;
 
 namespace FriendOrganizer.UI.Data.Lookups.Core
 {
+    /**
+     * This class Created To be a front interface for all Lookup interfaces to support navigation
+     * So for registeration purpose in autofac we implement all Lookups interfaces in this class
+     * where every interface related to lookup for specific model
+     *  => so in BootStrapper.cs we register it as : {builder.RegisterType<LookupDataService>().AsImplementedInterfaces();}
+     *      this mean whenever we request on of the interfaces which this class implemented
+     *      autofac will return this class
+     *
+     * Note that all implemented methods should return {Task<IEnumerable<LookupItem>>} and must be an async
+     *  asyn , Task : to support async
+     *  IEnumerable : to improve performance
+     *  LookupItem  : because this type which all methods in this class should return
+     *
+     * Also Note : we specifiy all fetched entities AsNoTracking() because Lookup must use to only view a summary of contents
+     * not for changing it
+     */
     public class LookupDataService : IFriendLookupDataService, IProgrammingLanguageLookupDataService
         ,IMeetingLookupDataService
     {
@@ -19,6 +35,9 @@ namespace FriendOrganizer.UI.Data.Lookups.Core
             _contextCreator = contextCreator;
         }
 
+        /*
+         * Implemented from IFriendLookupDataService
+         */
         public async Task<IEnumerable<LookupItem>> GetFriendLookupAsync()
         {
             // Warn : We can't use string interp.. int Linq query
@@ -35,6 +54,9 @@ namespace FriendOrganizer.UI.Data.Lookups.Core
             }
         }
 
+        /**
+         * Implemented from IProgrammingLanguageLookupDataService
+         */
         public async Task<IEnumerable<LookupItem>> GetProgrammingLanguageLookupAsync()
         {
             using (var ctx = _contextCreator())
@@ -49,7 +71,10 @@ namespace FriendOrganizer.UI.Data.Lookups.Core
             }
         }
 
-        public async Task<List<LookupItem>> GetMeetingLookupSync()
+        /**
+         * Implemented from IMeetingLookupDataService
+         */
+        public async Task<IEnumerable<LookupItem>> GetMeetingLookupSync()
         {
             using (var ctx = _contextCreator())
             {
