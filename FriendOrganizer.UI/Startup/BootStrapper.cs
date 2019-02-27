@@ -27,7 +27,10 @@ namespace FriendOrganizer.UI.Startup
         public IContainer Bootstrap()
         {
             var builder = new ContainerBuilder();
+
+            // we request SingleInstance to make it work across the application layers
             builder.RegisterType<EventAggregator>().As<IEventAggregator>().SingleInstance();
+
             builder.RegisterType<MainWindow>().AsSelf();
             builder.RegisterType<MainViewModel>().AsSelf();
 
@@ -40,9 +43,13 @@ namespace FriendOrganizer.UI.Startup
             builder.RegisterType<ProgrammingLanguageRepository>().As<IProgrammingLanguageRepository>();
             builder.RegisterType<MeetingRepository>().As<IMeetingRepository>();
             builder.RegisterType<NavigationViewModel>().As<INavigationViewModel>();
+
+            // To support autofac indexer {IIndex} => IIndex<string, IDetailViewModel> _detailViewModelCreator
+
             builder.RegisterType<FriendDetailViewModel>().Keyed<IDetailViewModel>(nameof(FriendDetailViewModel));
             builder.RegisterType<MeetingDetailViewModel>().Keyed<IDetailViewModel>(nameof(MeetingDetailViewModel));
             builder.RegisterType<ProgrammingLanguagedDetailViewModel>().Keyed<IDetailViewModel>(nameof(ProgrammingLanguagedDetailViewModel));
+
             builder.RegisterType<FriendOrganizerDbContext>().AsSelf();
 
             builder.RegisterType<MessageDialogService>().As<IMessageDialogService>();
