@@ -10,6 +10,20 @@ using Prism.Events;
 
 namespace FriendOrganizer.UI.ViewModel.Backend.Container
 {
+    /**
+     * This class created to show navigation With Lookups
+     * So this class will be a dataContext of NavigationView
+     * Via binding : this binding is an explicit binding in MainWindow.xaml
+     *
+     * This class should be a backend of left-side bar {NavigationView.xaml}
+     * So this class should provide a Lookup collections for any model need navigations
+     *  like Friends/Meetings
+     *
+     * Also : should fire/rais AfterDetailSaved/Delted Events
+     *
+     * Note : OpenDetailView implemented in NavigationItemViewModel which the model{friends/meetings} collections
+     * Consist of 
+     */
     public class NavigationViewModel : ViewModelBase, INavigationViewModel
     {
         private readonly IFriendLookupDataService _friendLookupService;
@@ -80,6 +94,12 @@ namespace FriendOrganizer.UI.ViewModel.Backend.Container
             }
         }
 
+        /**
+         * Because of this class will instanciated inside {MainViewModel} :
+         * this method {LoadAsync()} will called from {LoadAsync()=>MainViewModel}
+         * So Calling Order IS
+         * {MainWindo=>OnLoaded}===>{MainViewModel=>LoadAsync()}===>{NavigationViewModel=>LoadAsync()}
+         */
         public async Task LoadAsync()
         {
             var lookup = await _friendLookupService.GetFriendLookupAsync();
