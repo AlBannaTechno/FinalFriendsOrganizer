@@ -260,5 +260,5 @@ paket-files/
 __pycache__/
 *.pyc
 
-# Ignore ReadMe Collections Project
-ReadMECollections/*
+# # Ignore ReadMe Collections Project
+# ReadMECollections/*
